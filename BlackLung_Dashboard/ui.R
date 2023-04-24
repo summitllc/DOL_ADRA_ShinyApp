@@ -32,7 +32,21 @@ shinyUI(fluidPage(
                     )),
                     
                     menuItem(("Home"), tabName = "home", icon = icon("home")),
-                    menuItem("Interactive Map", tabName = "map", icon = icon("globe-americas"))
+                    menuItem("Interactive Map", tabName = "map", icon = icon("globe-americas")),
+                    
+                    tags$style("
+                              .copyright {
+                                font-size: 12px;
+                                color: #878787;
+                                padding: 10px;
+                                position: absolute;
+                                bottom: 0;
+                                left: 50%;
+                                transform: translateX(-50%);
+                              }"
+                    ),
+                    
+                    div(class = "copyright", HTML("&copy; 2023 Summit Consulting, LLC"))
                   )
                 ),
                 

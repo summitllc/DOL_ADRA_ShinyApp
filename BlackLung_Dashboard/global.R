@@ -36,7 +36,7 @@ variables <- setNames(variables,
 
 percent_cols <- colnames(map_data)[map_data %>% colnames() %>% str_detect("pct|percent")]
 map_data <- map_data %>% 
-  mutate(across(percent_cols, ~ .x * 100))
+  mutate(across(percent_cols, ~ round(.x * 100, 2)))
 
 
 # Would need to presave this and then read it in for it to be worth it
