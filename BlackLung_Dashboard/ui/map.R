@@ -46,9 +46,10 @@ tab_map <- tabItem(tabName = "map",
                    br(),
                    
                    fluidRow(
-                     column(6,
-                            dataTableOutput(outputId = "region_data")),
-                     column(6,
-                            dataTableOutput(outputId = "state_data")))
+                     column(12,
+                            dataTableOutput(outputId = "region_data"))
+                     # column(6,
+                     #        dataTableOutput(outputId = "state_data"))
+                     )
         
 )
