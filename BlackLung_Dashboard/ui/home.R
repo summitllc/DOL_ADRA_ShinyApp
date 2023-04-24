@@ -8,11 +8,11 @@ tab_home <- tabItem(tabName = "home",
         
         br(),
         
-        HTML(paste0(
-          "<br>",
-          "<img style = 'display: block; margin-left: auto; margin-right: auto;' src='black_lung_cartoon.jpg' width = 300'></a>",
-          "<br>"
-        )),
+        # HTML(paste0(
+        #   "<br>",
+        #   "<img style = 'display: block; margin-left: auto; margin-right: auto;' src='black_lung_cartoon.jpg' width = 300'></a>",
+        #   "<br>"
+        # )),
         
         fluidRow(
           valueBoxOutput("home1", width = 4),

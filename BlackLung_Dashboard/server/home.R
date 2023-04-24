@@ -51,7 +51,7 @@ output$home6 <- renderValueBox({
 
 output$home7 <- renderValueBox({
   valueBox(
-    formatC(data %>% filter(any_cwp != 0) %>% group_by(state) %>% count() %>% ungroup() %>% count(), format="d", big.mark=',')
+    formatC(data %>% filter(any_cwp != 0) %>% group_by(state) %>% count() %>% ungroup() %>% count() %>% ungroup(), format="d", big.mark=',')
     ,paste(("States with Black Lung Cases"))
     ,icon = icon("flag-usa")
     ,color = "black")
