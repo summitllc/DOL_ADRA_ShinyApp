@@ -19,13 +19,10 @@ output$map <- renderLeaflet({
   pal <- colorNumeric("Blues", domain = map_data2()[[val()]])
   
   if (val() %in% percent_cols) {
-    popup_sb <- paste0("Percent: ", as.character(map_data2()[[val()]]), "%")
+    popup_sb <- paste0("Percent: ", as.character(round(map_data2()[[val()]], 2)), "%")
   } else {
     popup_sb <- paste0("Value: ", as.character(round(map_data2()[[val()]], 2)))
   }
-  
-  print(paste0("Percent: ", as.character(map_data2()[[val()]]), "%"))
-  print(popup_sb)
   
   map <- leaflet() %>% 
     addProviderTiles("CartoDB.Positron") %>%
@@ -79,17 +76,17 @@ observeEvent(input$search_map, {
   output$region_data <- renderDataTable({
     df <- map_data %>% 
       st_drop_geometry() %>% 
-      select(countyname, state, region_id, val(), any_cwp, total_black_lung_deaths) %>%
-      arrange(desc(get(val()))) %>% 
+      mutate(intermed = round(get(val()), 2)) %>% 
+      select(countyname, state, region_id, intermed, any_cwp, total_black_lung_deaths) %>%
+      arrange(desc(intermed)) %>% 
       rename(County = countyname,
              State = state,
              Region = region_id,
              `Number of Black Lung Cases` = any_cwp,
              `Number of Black Lung Deaths` = total_black_lung_deaths
-      )
+      ) 
     
-    colnames(df)[4] <- names(variables)[variables==val()] 
-    print(colnames(df)[4])
+    colnames(df)[4] <- names(variables)[variables==val()]
     df
     
   }, escape = F, options = list(lengthMenu = c(10, 25, 50), pageLength = 10))
