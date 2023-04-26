@@ -19,14 +19,36 @@ output$map <- renderLeaflet({
   pal <- colorNumeric("Blues", domain = map_data2()[[val()]])
   
   if (val() %in% percent_cols) {
-    popup_sb <- paste0("Percent: ", as.character(round(map_data2()[[val()]], 2)), "%")
+    popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>", 
+                       "<br>",
+                       "Region: ", map_data2()$region_id, 
+                       "<br>",
+                       "MSHA District: ", map_data2()$msha_district_county,
+                       "<br>",
+                       "Percent: ", as.character(round(map_data2()[[val()]], 2)), "%",
+                       "<br>",
+                       "Total Black Lung Incidences: ", map_data2()$any_cwp,
+                       "<br>",
+                       "Total Black Lung Deaths: ", map_data2()$total_black_lung_deaths
+                       )
   } else {
-    popup_sb <- paste0("Value: ", as.character(round(map_data2()[[val()]], 2)))
+    popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>",
+                       "<br>",
+                       "Region: ", map_data2()$region_id, 
+                       "<br>",
+                       "MSHA District: ", map_data2()$msha_district_county,
+                       "<br>",
+                       "Value: ", as.character(round(map_data2()[[val()]], 2)),
+                       "<br>",
+                       "Total Black Lung Incidences: ", map_data2()$any_cwp,
+                       "<br>",
+                       "Total Black Lung Deaths: ", map_data2()$total_black_lung_deaths
+    )
   }
   
   map <- leaflet() %>% 
     addProviderTiles("CartoDB.Positron") %>%
-    setView(-98.35, 39.5, zoom = 4) %>% 
+    setView(-98.35, 39.5, zoom = 5) %>% 
     addPolygons(data = map_data2(),
                 fillColor = ~pal(map_data2()[[val()]]),
                 stroke = TRUE,
@@ -77,16 +99,17 @@ observeEvent(input$search_map, {
     df <- map_data %>% 
       st_drop_geometry() %>% 
       mutate(intermed = round(get(val()), 2)) %>% 
-      select(countyname, state, region_id, intermed, any_cwp, total_black_lung_deaths) %>%
+      select(countyname, state, region_id, msha_district_county, intermed, any_cwp, total_black_lung_deaths) %>%
       arrange(desc(intermed)) %>% 
       rename(County = countyname,
              State = state,
              Region = region_id,
+             `MSHA District` = msha_district_county,
              `Number of Black Lung Cases` = any_cwp,
              `Number of Black Lung Deaths` = total_black_lung_deaths
       ) 
     
-    colnames(df)[4] <- names(variables)[variables==val()]
+    colnames(df)[5] <- names(variables)[variables==val()]
     df
     
   }, escape = F, options = list(lengthMenu = c(10, 25, 50), pageLength = 10))

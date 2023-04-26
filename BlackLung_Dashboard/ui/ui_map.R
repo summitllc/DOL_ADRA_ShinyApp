@@ -32,16 +32,8 @@ tab_map <- tabItem(tabName = "map",
                    
                    fluidRow(
                      column(12,
-                            leafletOutput(outputId = "map"),
+                            leafletOutput(outputId = "map", height = 800)
                             )),
-                   
-                   br(),
-                   
-                   fluidRow(
-                     column(6,
-                            plotOutput(outputId = "incid_plot")),
-                     column(6,
-                            plotOutput(outputId = "death_plot"))),
                    
                    br(),
                    
@@ -50,6 +42,16 @@ tab_map <- tabItem(tabName = "map",
                             dataTableOutput(outputId = "region_data"))
                      # column(6,
                      #        dataTableOutput(outputId = "state_data"))
-                     )
+                   ),
+                   
+                   br(),
+                   
+                   fluidRow(
+                     column(6,
+                            plotOutput(outputId = "incid_plot")),
+                     column(6,
+                            plotOutput(outputId = "death_plot")))
+                   
+                  
         
 )
