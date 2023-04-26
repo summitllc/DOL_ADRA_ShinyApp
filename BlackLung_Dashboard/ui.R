@@ -12,11 +12,15 @@ library(shiny)
 library(shinydashboard)
 
 # Sourced Files 
-source("ui/home.R")
-source("ui/map.R")
+source("ui/ui_home.R")
+source("ui/ui_map.R")
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
+  # tags$head(
+  #   tags$link(rel = "stylesheet", type = "text/css", href = "summit.css")
+  # ),
+  
   dashboardPage(skin = "black",
                 dashboardHeader(title = " "),
                 
@@ -37,7 +41,7 @@ shinyUI(fluidPage(
                     tags$style("
                               .copyright {
                                 font-size: 12px;
-                                color: #878787;
+                                color: white;
                                 padding: 10px;
                                 position: absolute;
                                 bottom: 0;
@@ -45,6 +49,15 @@ shinyUI(fluidPage(
                                 transform: translateX(-50%);
                               }"
                     ),
+                    
+                    tags$style(".fa-map-location-dot {color: white}
+                                .fa-map-pin {color: white}
+                                .fa-lungs {color: white}
+                                .fa-lungs-virus {color: white}
+                                .fa-mountain-city {color: white}
+                                .fa-helmet-safety {color: white}
+                                .fa-flag-usa {color: white}
+                                .fa-address-book {color: white}"),
                     
                     div(class = "copyright", HTML("&copy; 2023 Summit Consulting, LLC"))
                   )

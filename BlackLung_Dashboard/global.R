@@ -3,6 +3,7 @@ library(leaflet)
 library(tigris)
 library(sf)
 library(rmapshaper)
+# tidy census
 
 data <- readxl::read_xlsx("black lung complete dataset.xlsx")
 
@@ -15,6 +16,7 @@ counties <- counties %>%
 map_data <- data %>% 
   left_join(counties) %>% 
   st_as_sf(crs = 4326)
+# geo join
 
 variables <- colnames(map_data)[map_data %>% colnames() %>% str_detect("per1000|pct|percent|tot")]
 variables <- setNames(variables, 

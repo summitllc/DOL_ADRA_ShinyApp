@@ -13,7 +13,7 @@ library(shinydashboard)
 # Define server logic 
 shinyServer(function(input, output) {
   
-    source("server/home.R", local = TRUE)
-    source("server/map.R", local = TRUE)
+    source("server/server_home.R", local = TRUE)
+    source("server/server_map.R", local = TRUE)
 
 })
