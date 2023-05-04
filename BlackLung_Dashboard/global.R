@@ -48,3 +48,8 @@ percent_cols <- colnames(map_data)[map_data %>% colnames() %>% str_detect("pct|p
 map_data <- map_data %>% 
   mutate(across(percent_cols, ~ .x * 100))
 
+time_vars <- map_data %>% 
+  select(matches("86|01|21|20")) %>% 
+  select(-matches("acs")) %>% 
+  colnames()
+

@@ -10,13 +10,14 @@ val <- eventReactive(input$search_map, {
 }) 
 
 map_data2 <- eventReactive(input$search_map, {
-  map_data %>% 
-    filter(get(val()) > 0)
+  # map_data %>% 
+  #   filter(get(val()) > 0)
+  map_data
 }) 
 
 output$map <- renderLeaflet({
   # Creating a color palette based on the number range in the column of interest
-  pal <- colorNumeric("Blues", domain = map_data2()[[val()]])
+  pal <- colorNumeric("Blues", domain = map_data2()[[val()]], na.color = "#696969")
   
   if (val() %in% percent_cols) {
     popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>", 

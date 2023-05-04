@@ -15,5 +15,6 @@ shinyServer(function(input, output) {
   
     source("server/server_home.R", local = TRUE)
     source("server/server_map.R", local = TRUE)
+    source("server/server_time_series.R", local = TRUE)
 
 })

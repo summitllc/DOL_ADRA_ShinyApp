@@ -14,6 +14,7 @@ library(shinydashboard)
 # Sourced Files 
 source("ui/ui_home.R")
 source("ui/ui_map.R")
+source("ui/ui_time_series.R")
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -37,6 +38,7 @@ shinyUI(fluidPage(
                     
                     menuItem(("Home"), tabName = "home", icon = icon("home")),
                     menuItem("Interactive Map", tabName = "map", icon = icon("globe-americas")),
+                    menuItem("Time Series Data", tabName = "time_series", icon = icon("clock")),
                     
                     tags$style("
                               .copyright {
@@ -68,7 +70,7 @@ shinyUI(fluidPage(
                   tags$style(".small-box.bg-navy { background-color: #013783 !important; }"),
                   tags$style(".small-box.bg-yellow { background-color: #fda85e !important; }"),
                   tags$style("@import url(https://use.fontawesome.com/releases/v5.7.2/css/all.css);"),
-                  tabItems(tab_home, tab_map)
+                  tabItems(tab_home, tab_map, tab_time_series)
                 )
                 
                 
