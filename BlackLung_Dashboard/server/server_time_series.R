@@ -10,6 +10,12 @@ output$surface_time <- renderPlot({
          y = "Surface Mines 2021")
 })
 
+output$hover_surface_time <- renderUI({hover_output("surface_time_hover",
+                                                       "Surface Mines 2001: ",
+                                                       "Surface Mines 2021: ",
+                                                       "surfacemines01",
+                                                       "surfacemines21")})
+
 output$under_time <- renderPlot({
   map_data %>% 
     ggplot(aes(x = undergrndmines01, y = undergrndmines21)) +
@@ -21,6 +27,12 @@ output$under_time <- renderPlot({
          x = "Underground Mines 2001",
          y = "Underground Mines 2021")
 })
+
+output$hover_under_time <- renderUI({hover_output("under_time_hover",
+                                                       "Underground Mines 2001: ",
+                                                       "Underground Mines 2021: ",
+                                                       "undergrndmines01",
+                                                       "undergrndmines21")})
 
 output$total_mine_time <- renderPlot({
   map_data %>% 
@@ -34,6 +46,12 @@ output$total_mine_time <- renderPlot({
          y = "Total Mines 2021")
 })
 
+output$hover_total_mine_time <- renderUI({hover_output("total_mine_time_hover",
+                                                       "Total Mines 2001: ",
+                                                       "Total Mines 2021: ",
+                                                       "totalmines01",
+                                                       "totalmines21")})
+
 output$total_prod_time <- renderPlot({
   map_data %>% 
     ggplot(aes(x = totalprodx1000st01, y = totalprodx1000st21)) +
@@ -45,6 +63,12 @@ output$total_prod_time <- renderPlot({
          x = "Total Production (x1000) 2001",
          y = "Total Production (x1000) 2021")
 })
+
+output$hover_total_prod_time <- renderUI({hover_output("total_prod_time_hover",
+                                                       "Total Production (x1000) 2001: ",
+                                                       "Total Production (x1000) 2021: ",
+                                                       "totalprodx1000st01",
+                                                       "totalprodx1000st21")})
 
 output$total_employ_time <- renderPlot({
   map_data %>% 
@@ -58,6 +82,12 @@ output$total_employ_time <- renderPlot({
          y = "Total Number of Mining Employees 2020")
 })
 
+output$hover_total_employ_time <- renderUI({hover_output("total_employ_time_hover",
+                                                       "Total Number of Mining Employees 1986: ",
+                                                       "Total Number of Mining Employees 2020: ",
+                                                       "total_mining_employees_1986",
+                                                       "total_mining_employees_2020")})
+
 output$pct_employ_time <- renderPlot({
   map_data %>% 
     ggplot(aes(x = pct_total_mining_employees_1986, y = pct_total_mining_employees_2020)) +
@@ -70,14 +100,19 @@ output$pct_employ_time <- renderPlot({
          y = "Percent of Miners 2020")
 })
 
-output$hover_pct_employ_time <- renderUI({
-  hover <- input[["pct_employ_time_hover"]]
+output$hover_pct_employ_time <- renderUI({hover_output("pct_employ_time_hover",
+                                                       "Percent of Miners 1986: ",
+                                                       "Percent of Miners 2020: ",
+                                                       "pct_total_mining_employees_1986",
+                                                       "pct_total_mining_employees_2020")})
+
+hover_output <- function(hover_input_id, x_lab, y_lab, x_col, y_col) {
+  hover <- input[[hover_input_id]]
   if(is.null(hover)) return(NULL)
   
   point <- nearPoints(map_data, hover, threshold = 5, maxpoints = 1)
   if(nrow(point) == 0) return(NULL)
   
-  print(point)
   left_px <- hover$coords_css$x
   top_px  <- hover$coords_css$y
   
@@ -90,11 +125,12 @@ output$hover_pct_employ_time <- renderUI({
   
   # tooltip created as wellPanel
   tooltip <- paste0(
-    "<b> Percent of Miners 1986: </b>",     point[["pct_total_mining_employees_1986"]],     "<br/>",
-    "<b> Percent of Miners 2020: </b>",     point[["pct_total_mining_employees_2020"]],     "<br/>",
-    "<b> label: </b>", point[["label"]], "<br/>"
+    "<b>", point[["countyname"]], " County, ", point[["state"]], "</b>",  "<br/>", 
+    "<b> ", x_lab, " </b>",     point[[x_col]],     "<br/>",
+    "<b> ", y_lab, " </b>",     point[[y_col]],     "<br/>"
   )
   wellPanel(
     style = style, p(HTML(tooltip))
   )
-})
+}
+

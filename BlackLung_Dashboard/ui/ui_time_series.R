@@ -15,11 +15,13 @@ tab_time_series <- tabItem(tabName = "time_series",
                              fluidRow(
                                
                                column(6,
-                                      plotOutput(outputId = "surface_time")
+                                      plotOutput(outputId = "surface_time", hover = hoverOpts("surface_time_hover")),
+                                      uiOutput("hover_surface_time")
                                ),
                                
                                column(6,
-                                      plotOutput(outputId = "under_time")
+                                      plotOutput(outputId = "under_time", hover = hoverOpts("under_time_hover")),
+                                      uiOutput("hover_under_time")
                                )
                                
                              ),
@@ -28,11 +30,13 @@ tab_time_series <- tabItem(tabName = "time_series",
                              
                              fluidRow(
                                column(6,
-                                      plotOutput(outputId = "total_mine_time")
+                                      plotOutput(outputId = "total_mine_time", hover = hoverOpts("total_mine_time_hover")),
+                                      uiOutput("hover_total_mine_time")
                                ),
                                
                                column(6,
-                                      plotOutput(outputId = "total_prod_time")
+                                      plotOutput(outputId = "total_prod_time", hover = hoverOpts("total_prod_time_hover")),
+                                      uiOutput("hover_total_prod_time")
                                )
                              )
                            ),
@@ -40,7 +44,8 @@ tab_time_series <- tabItem(tabName = "time_series",
                            box(title = strong(("How have things changed from 1986 to 2020?")), status = "success", width = 12,
                                fluidRow(
                                  column(6,
-                                        plotOutput(outputId = "total_employ_time")
+                                        plotOutput(outputId = "total_employ_time", hover = hoverOpts("total_employ_time_hover")),
+                                        uiOutput("hover_total_employ_time")
                                  ),
                                  
                                  column(6,
