@@ -3,7 +3,7 @@ library(leaflet)
 # tidy census
 
 data <- readxl::read_xlsx("black lung complete dataset.xlsx")
-
+# map_data <- read_rds("BlackLung_Dashboard/counties_lite.rds")
 map_data <- read_rds("counties_lite.rds")
 
 factors <- c('countyfips', 
@@ -43,10 +43,6 @@ variables <- setNames(variables,
                         str_replace("Cwppmf", "CWP PMF") %>%
                         str_replace("Cwp", "CWP") %>%
                         str_replace("Occ", "OCC"))
-
-percent_cols <- colnames(map_data)[map_data %>% colnames() %>% str_detect("pct|percent")]
-map_data <- map_data %>% 
-  mutate(across(percent_cols, ~ .x * 100))
 
 time_vars <- map_data %>% 
   select(matches("86|01|21|20")) %>% 
