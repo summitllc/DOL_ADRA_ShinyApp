@@ -49,3 +49,10 @@ time_vars <- map_data %>%
   select(-matches("acs")) %>% 
   colnames()
 
+# Navajo Nation Boundary
+# navajo <- sf::read_sf('BlackLung_Dashboard/cb_2018_us_aiannh_500k/cb_2018_us_aiannh_500k.shp') %>% filter(NAME == "Navajo Nation")
+navajo <- sf::read_sf('cb_2018_us_aiannh_500k/cb_2018_us_aiannh_500k.shp') %>% filter(NAME == "Navajo Nation")
+
+# Appalacia
+# appalachia <- sf::read_sf('BlackLung_Dashboard/appalachia_bounds/appalachia_bounds.shp') %>% select(geometry)
+appalachia <- sf::read_sf('appalachia_bounds/appalachia_bounds.shp') %>% select(geometry)

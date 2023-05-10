@@ -59,6 +59,10 @@ output$map <- renderLeaflet({
                 weight = 0.2,
                 smoothFactor = 0.2,
                 popup = ~popup_sb) %>%
+    addPolygons(data = navajo, color = "#FF0000", weight = 1, smoothFactor = 0.5,
+                opacity = 1.0, fill = FALSE) %>% 
+    addPolygons(data = appalachia, color = "#FF0000", weight = 1, smoothFactor = 0.5,
+                opacity = 1.0, fill = FALSE) %>% 
     addLegend(pal = pal,
               values = map_data2()[[val()]],
               position = "bottomleft",
