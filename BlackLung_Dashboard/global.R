@@ -44,6 +44,8 @@ variables <- setNames(variables,
                         str_replace("Cwp", "CWP") %>%
                         str_replace("Occ", "OCC"))
 
+percent_cols <- colnames(map_data)[map_data %>% colnames() %>% str_detect("pct|percent")]
+
 time_vars <- map_data %>% 
   select(matches("86|01|21|20")) %>% 
   select(-matches("acs")) %>% 

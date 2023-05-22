@@ -126,8 +126,8 @@ hover_output <- function(hover_input_id, x_lab, y_lab, x_col, y_col) {
   # tooltip created as wellPanel
   tooltip <- paste0(
     "<b>", point[["countyname"]], " County, ", point[["state"]], "</b>",  "<br/>", 
-    "<b> ", x_lab, " </b>",     point[[x_col]],     "<br/>",
-    "<b> ", y_lab, " </b>",     point[[y_col]],     "<br/>"
+    "<b> ", x_lab, " </b>",   round(point[[x_col]], 2),     "<br/>",
+    "<b> ", y_lab, " </b>",   round(point[[y_col]], 2),     "<br/>"
   )
   wellPanel(
     style = style, p(HTML(tooltip))
