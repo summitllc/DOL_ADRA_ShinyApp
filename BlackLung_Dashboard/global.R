@@ -2,7 +2,7 @@ library(tidyverse)
 library(leaflet)
 # tidy census
 
-data <- readxl::read_xlsx("black lung complete dataset.xlsx")
+data <- readxl::read_xlsx("black lung dataset for map.xlsx")
 # map_data <- read_rds("BlackLung_Dashboard/counties_lite.rds")
 map_data <- read_rds("counties_lite.rds")
 
