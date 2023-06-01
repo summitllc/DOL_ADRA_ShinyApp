@@ -10,11 +10,13 @@
 # Packages 
 library(shiny)
 library(shinydashboard)
+library(shinycssloaders)
 
 # Sourced Files 
 source("ui/ui_home.R")
 source("ui/ui_map.R")
 source("ui/ui_time_series.R")
+source("ui/ui_data_dict.R")
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -23,10 +25,12 @@ shinyUI(fluidPage(
   # ),
   
   dashboardPage(skin = "black",
-                dashboardHeader(title = " "),
-                
+                dashboardHeader(disable = T), #title = " "),
+      
                 dashboardSidebar(
                   sidebarMenu(
+                    # style = "position: fixed; overflow: visible;",
+                    
                     HTML(paste0(
                       "<br>",
                       "<img style = 'display: block; margin-left: auto; margin-right: auto;' src='Seal_of_the_United_States_Department_of_Labor.png' width = '186'></a>",
@@ -39,6 +43,8 @@ shinyUI(fluidPage(
                     menuItem(("Home"), tabName = "home", icon = icon("home")),
                     menuItem("Interactive Map", tabName = "map", icon = icon("globe-americas")),
                     menuItem("Time Series Data", tabName = "time_series", icon = icon("clock")),
+                    menuItem("Data Dictionary", tabName = "data_dict", icon = icon("book")),
+                    
                     
                     tags$style("
                               .copyright {
@@ -51,6 +57,12 @@ shinyUI(fluidPage(
                                 transform: translateX(-50%);
                               }"
                     ),
+                    
+                    tags$style("
+                               .main-sidebar {
+                                position: fixed;
+                                overflow: visible;
+                              }"),
                     
                     tags$style(".fa-map-location-dot {color: white}
                                 .fa-map-pin {color: white}
@@ -70,7 +82,7 @@ shinyUI(fluidPage(
                   tags$style(".small-box.bg-navy { background-color: #013783 !important; }"),
                   tags$style(".small-box.bg-yellow { background-color: #fda85e !important; }"),
                   tags$style("@import url(https://use.fontawesome.com/releases/v5.7.2/css/all.css);"),
-                  tabItems(tab_home, tab_map, tab_time_series)
+                  tabItems(tab_home, tab_map, tab_time_series, tab_data_dict)
                 )
                 
                 
