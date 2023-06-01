@@ -1,10 +1,12 @@
 library(tidyverse)
 library(leaflet)
+library(rgeos)
 # tidy census
 
 data <- readxl::read_xlsx("black lung dataset for map.xlsx")
 # map_data <- read_rds("BlackLung_Dashboard/counties_lite.rds")
 map_data <- read_rds("counties_lite.rds")
+data_dict <- readxl::read_xlsx("data dictionary.xlsx")
 
 factors <- c('countyfips', 
              'countyname', 
@@ -44,6 +46,13 @@ variables <- setNames(variables,
                         str_replace("Cwp", "CWP") %>%
                         str_replace("Occ", "OCC"))
 
+metrics <- variables[str_detect(variables, "death|cwp|black")]
+factors <- variables[!(variables %in% metrics)]
+map_data$centers <- st_centroid(st_geometry(map_data))
+map_data <- map_data %>% 
+  mutate(long = unlist(map(map_data$centers,1)),
+         lat = unlist(map(map_data$centers,2)))
+
 percent_cols <- colnames(map_data)[map_data %>% colnames() %>% str_detect("pct|percent")]
 
 time_vars <- map_data %>% 
@@ -52,8 +61,8 @@ time_vars <- map_data %>%
   colnames()
 
 # Navajo Nation Boundary
-# navajo <- sf::read_sf('BlackLung_Dashboard/cb_2018_us_aiannh_500k/cb_2018_us_aiannh_500k.shp') %>% filter(NAME == "Navajo Nation")
-navajo <- sf::read_sf('cb_2018_us_aiannh_500k/cb_2018_us_aiannh_500k.shp') %>% filter(NAME == "Navajo Nation")
+# navajo <- sf::read_sf('cb_2018_us_aiannh_500k/cb_2018_us_aiannh_500k.shp') %>% filter(NAME == "Navajo Nation")
+navajo <- read_rds("navajo.rds")
 
 # Appalacia
 # appalachia <- sf::read_sf('BlackLung_Dashboard/appalachia_bounds/appalachia_bounds.shp') %>% select(geometry)
