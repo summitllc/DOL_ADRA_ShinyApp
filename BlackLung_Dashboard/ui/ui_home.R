@@ -4,7 +4,7 @@ tab_home <- tabItem(tabName = "home",
         
         hr(),
         
-        h4(p(style = "text-align: center;", ("This shiny app is designed for you to interactively visualize Black Lung throughout the United States."))),
+        h4(p(style = "text-align: center;", ("This app is designed for you to interactively visualize black lung metrics throughout the United States."))),
         
         br(),
         
