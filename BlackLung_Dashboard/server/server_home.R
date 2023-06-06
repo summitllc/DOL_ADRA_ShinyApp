@@ -45,8 +45,9 @@ output$home5 <- renderValueBox({
 
 output$home6 <- renderValueBox({
   valueBox(
-    formatC(sum(data$totalmines21), format="d", big.mark=','),
-    paste(("Total Mines in 2021")),
+    # Change
+    formatC("-75.7% (-1576)", format="s", big.mark=','),
+    paste(("Change in Mines (2001 - 2021)")),
     icon = icon('hard-hat'),
     color = "yellow")
 })
