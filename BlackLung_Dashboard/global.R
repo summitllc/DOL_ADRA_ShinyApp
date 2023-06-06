@@ -1,6 +1,7 @@
 library(tidyverse)
 library(leaflet)
 library(rgeos)
+library(sf)
 # tidy census
 
 data <- readxl::read_xlsx("black lung dataset for map.xlsx")
@@ -28,10 +29,10 @@ factors <- c('countyfips',
              'scalar_current_coal_county', 
              'scalar_former_coal_county')
 
-variables <- colnames(map_data)[map_data %>% colnames() %>% str_detect("per1000|pct|percent|tot")]
+variables <- colnames(map_data)[map_data %>% colnames() %>% str_detect("per1000|pct|percent|tot|pred")]
 variables <- setNames(variables, 
                       colnames(map_data)[map_data %>% colnames() %>%
-                                           str_detect("per1000|pct|percent|tot")] %>%
+                                           str_detect("per1000|pct|percent|tot|pred")] %>%
                         str_replace_all("_", " ") %>%
                         str_replace("pct", "Percent") %>%
                         str_replace("acshouseheatingfueltotalocc", "acs house heating fuel total occ") %>%
