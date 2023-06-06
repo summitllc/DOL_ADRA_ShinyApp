@@ -34,7 +34,11 @@ output$map <- renderLeaflet({
                        "<br>",
                        "Total Black Lung Incidences: ", map_data2()$any_cwp,
                        "<br>",
-                       "Total Black Lung Deaths: ", map_data2()$total_black_lung_deaths
+                       "<span class='custom'>Predicted Total Black Lung Incidences: ", round(map_data2()$predicted_black_lung_cases, 2), "</span>",
+                       "<br>",
+                       "Total Black Lung Deaths: ", map_data2()$total_black_lung_deaths,
+                       "<br>",
+                       "<span class='custom'>Predicted Total Black Lung Deaths: ", round(map_data2()$predicted_black_lung_deaths, 2), "</span>"
                        )
   } else {
     popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>",
@@ -47,7 +51,11 @@ output$map <- renderLeaflet({
                        "<br>",
                        "Total Black Lung Incidences: ", map_data2()$any_cwp,
                        "<br>",
-                       "Total Black Lung Deaths: ", map_data2()$total_black_lung_deaths
+                       "<span class='custom'>Predicted Total Black Lung Incidences: ", round(map_data2()$predicted_black_lung_cases, 2),"</span>",
+                       "<br>",
+                       "Total Black Lung Deaths: ", map_data2()$total_black_lung_deaths,
+                       "<br>",
+                       "<span class='custom'>Predicted Total Black Lung Deaths: ", round(map_data2()$predicted_black_lung_deaths, 2), "</span>"
     )
   }
 

@@ -42,7 +42,7 @@ shinyUI(fluidPage(
                     
                     menuItem(("Home"), tabName = "home", icon = icon("home")),
                     menuItem("Interactive Map", tabName = "map", icon = icon("globe-americas")),
-                    menuItem("Time Series Data", tabName = "time_series", icon = icon("clock")),
+                    menuItem("Additional Graphs", tabName = "time_series", icon = icon("clock")),
                     menuItem("Data Dictionary", tabName = "data_dict", icon = icon("book")),
                     
                     
@@ -72,6 +72,12 @@ shinyUI(fluidPage(
                                 .fa-helmet-safety {color: white}
                                 .fa-flag-usa {color: white}
                                 .fa-address-book {color: white}"),
+                    
+                    tags$style(
+                     '.custom {
+                        color: red;
+                      }'
+                    ),
                     
                     div(class = "copyright", HTML("&copy; 2023 Summit Consulting, LLC"))
                   )
