@@ -9,25 +9,25 @@ data <- readxl::read_xlsx("black lung dataset for map.xlsx")
 map_data <- read_rds("counties_lite.rds")
 data_dict <- readxl::read_xlsx("data dictionary.xlsx")
 
-factors <- c('countyfips', 
-             'countyname', 
-             'state', 
-             'msha_district_county', 
-             'region_id', 
-             'surfacemines01', 
-             'undergrndmines01', 
-             'totalmines01', 
-             'surfacemines21', 
-             'undergrndmines21', 
-             'totalmines21', 
-             'pct_total_mining_employees_1986', 
-             'pct_total_mining_employees_2020', 
-             'total_weekly_exposure_hours', 
-             'totalprodx1000st01', 
-             'totalprodx1000st21', 
-             'scalar_coal_county', 
-             'scalar_current_coal_county', 
-             'scalar_former_coal_county')
+# factors <- c('countyfips', 
+#              'countyname', 
+#              'state', 
+#              'msha_district_county', 
+#              'region_id', 
+#              'surfacemines01', 
+#              'undergrndmines01', 
+#              'totalmines01', 
+#              'surfacemines21', 
+#              'undergrndmines21', 
+#              'totalmines21', 
+#              'pct_total_mining_employees_1986', 
+#              'pct_total_mining_employees_2020', 
+#              'total_weekly_exposure_hours', 
+#              'totalprodx1000st01', 
+#              'totalprodx1000st21', 
+#              'scalar_coal_county', 
+#              'scalar_current_coal_county', 
+#              'scalar_former_coal_county')
 
 variables <- colnames(map_data)[map_data %>% colnames() %>% str_detect("per1000|pct|percent|tot|pred")]
 variables <- setNames(variables, 
@@ -47,19 +47,15 @@ variables <- setNames(variables,
                         str_replace("Cwp", "CWP") %>%
                         str_replace("Occ", "OCC"))
 
-metrics <- variables[str_detect(variables, "death|cwp|black")]
-factors <- variables[!(variables %in% metrics)]
-map_data$centers <- st_centroid(st_geometry(map_data))
-map_data <- map_data %>% 
-  mutate(long = unlist(map(map_data$centers,1)),
-         lat = unlist(map(map_data$centers,2)))
+# metrics <- variables[str_detect(variables, "death|cwp|black")]
+# factors <- variables[!(variables %in% metrics)]
+# map_data$centers <- st_centroid(st_geometry(map_data))
+# map_data <- map_data %>% 
+#   mutate(long = unlist(map(map_data$centers,1)),
+#          lat = unlist(map(map_data$centers,2)))
 
 percent_cols <- colnames(map_data)[map_data %>% colnames() %>% str_detect("pct|percent")]
 
-time_vars <- map_data %>% 
-  select(matches("86|01|21|20")) %>% 
-  select(-matches("acs")) %>% 
-  colnames()
 
 # Navajo Nation Boundary
 # navajo <- sf::read_sf('cb_2018_us_aiannh_500k/cb_2018_us_aiannh_500k.shp') %>% filter(NAME == "Navajo Nation")

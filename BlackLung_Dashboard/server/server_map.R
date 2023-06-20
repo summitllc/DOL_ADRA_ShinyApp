@@ -19,9 +19,22 @@ map_data2 <- eventReactive(input$search_map, {
   map_data
 })
 
+# map_data3 <- eventReactive(input$search_map, {
+#   map_data %>%
+#     filter(get(met()) > 0)
+# })
+
 output$map <- renderLeaflet({
   # Creating a color palette based on the number range in the column of interest
-  pal <- colorNumeric("Blues", domain = map_data2()[[val()]], na.color = "#696969")
+  if (all(map_data2()[[val()]] == 0)) {
+    pal <- colorNumeric(c("#FFFFFF"), domain = map_data2()[[val()]], na.color = "#FFFFFF")
+  } else {
+    pal <- colorNumeric("Blues", domain = map_data2()[[val()]], na.color = "#FFFFFF")
+  }
+  
+  
+  # IDEA FOR COLOR FIX 
+  # all(data$undrgrnd_cwppmf_per1000 == 0)
 
   if (val() %in% percent_cols) {
     popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>",
@@ -78,6 +91,13 @@ output$map <- renderLeaflet({
                 opacity = 1.0, fill = FALSE, group = "Navajo Nation") %>%
     addPolygons(data = appalachia, color = "#FF0000", weight = 1, smoothFactor = 0.5,
                 opacity = 1.0, fill = FALSE, group = "Appalachia") %>%
+    # addCircles(lng = map_data3()$long, lat = map_data3()$lat, weight = 1,
+    #            radius = map_data3()[[met()]] * 100,
+    #            color = "purple",
+    #            opacity = .75, 
+    #            fill = FALSE, 
+    #            # data = map_data2,
+    #            group = "Metric") %>% 
     # Overlay control
     addLayersControl(
       # baseGroups = c("Tiles"),
@@ -88,10 +108,8 @@ output$map <- renderLeaflet({
     addLegend(pal = pal,
               values = map_data2()[[val()]],
               position = "bottomleft",
-              title = names(variables)[variables==val()]) #%>%
-    # addCircles(lng = ~long, lat = ~lat, weight = 1,
-    #            radius = ~map_data2()[[met()]],
-    #            data = map_data2)
+              title = names(variables)[variables==val()])
+    
 
   map %>% 
     hideGroup("Navajo Nation") %>% 
