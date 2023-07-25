@@ -26,6 +26,8 @@ shinyUI(fluidPage(
   
   dashboardPage(skin = "black",
                 dashboardHeader(disable = T), #title = " "),
+                title="Black Lung Dashboard",
+              
       
                 dashboardSidebar(
                   sidebarMenu(
@@ -64,14 +66,14 @@ shinyUI(fluidPage(
                                 overflow: visible;
                               }"),
                     
-                    tags$style(".fa-map-location-dot {color: white}
-                                .fa-map-pin {color: white}
-                                .fa-lungs {color: white}
-                                .fa-lungs-virus {color: white}
-                                .fa-mountain-city {color: white}
-                                .fa-helmet-safety {color: white}
-                                .fa-flag-usa {color: white}
-                                .fa-address-book {color: white}"),
+                    # tags$style(".fa-map-location-dot {color: white}
+                    #             .fa-map-pin {color: white}
+                    #             .fa-lungs {color: white}
+                    #             .fa-lungs-virus {color: white}
+                    #             .fa-mountain-city {color: white}
+                    #             .fa-helmet-safety {color: white}
+                    #             .fa-flag-usa {color: white}
+                    #             .fa-address-book {color: white}"),
                     
                     tags$style(
                      '.custom {
@@ -87,6 +89,9 @@ shinyUI(fluidPage(
                   tags$style(".small-box.bg-black { background-color: #fa234b !important; }"),
                   tags$style(".small-box.bg-navy { background-color: #013783 !important; }"),
                   tags$style(".small-box.bg-yellow { background-color: #fda85e !important; }"),
+                  tags$style(".small-box .icon-large { color: white !important; bottom: 2.5px}"),
+                  tags$style(".small-box p { font-size: .8vw; }"),
+                  tags$style(".small-box h3 { font-size: 2.5vw; }"),
                   tags$style("@import url(https://use.fontawesome.com/releases/v5.7.2/css/all.css);"),
                   tabItems(tab_home, tab_map, tab_time_series, tab_data_dict)
                 )
