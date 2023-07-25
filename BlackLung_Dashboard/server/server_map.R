@@ -16,7 +16,7 @@ val <- eventReactive(input$search_map, {
 map_data2 <- eventReactive(input$search_map, {
   # map_data %>%
   #   filter(get(val()) > 0 & get(met()) > 0)
-  map_data
+  map_data 
 })
 
 # map_data3 <- eventReactive(input$search_map, {
@@ -27,9 +27,20 @@ map_data2 <- eventReactive(input$search_map, {
 output$map <- renderLeaflet({
   # Creating a color palette based on the number range in the column of interest
   if (all(map_data2()[[val()]] == 0)) {
-    pal <- colorNumeric(c("#FFFFFF"), domain = map_data2()[[val()]], na.color = "#FFFFFF")
+    pal <- colorNumeric(c("#FFFFFF"), domain = map_data2()[[val()]], na.color = "#bababa")
+    
+  } else if (val() == "scalar_coal_county") {#(is.character(map_data2()[[val()]])) {
+    pal <- colorFactor(palette = "Blues", domain = map_data2()[[val()]], 
+                       levels = c("No Coal", "Very Low", "Low", "Medium", "High", "Very High"), 
+                       ordered = T,
+                       na.color = "#bababa") 
+  } else if (is.factor(map_data2()[[val()]]) & nlevels(map_data2()[[val()]])) {
+    pal <- colorFactor(palette = "Blues", domain = map_data2()[[val()]], 
+                       levels = c("Yes", "No"), 
+                       ordered = T, reverse = T,
+                       na.color = "#bababa") 
   } else {
-    pal <- colorNumeric("Blues", domain = map_data2()[[val()]], na.color = "#FFFFFF")
+    pal <- colorNumeric("Blues", domain = map_data2()[[val()]], na.color = "#bababa")
   }
   
   
@@ -47,12 +58,29 @@ output$map <- renderLeaflet({
                        "<br>",
                        "Total Black Lung Incidences: ", map_data2()$any_cwp,
                        "<br>",
-                       "<span class='custom'>Predicted Total Black Lung Incidences: ", round(map_data2()$predicted_black_lung_cases, 2), "</span>",
+                       "<span class='custom'>Predicted Total Black Lung Incidences: ", round(map_data2()$predict_any_cwp, 2), "</span>",
                        "<br>",
                        "Total Black Lung Deaths: ", map_data2()$total_black_lung_deaths,
                        "<br>",
-                       "<span class='custom'>Predicted Total Black Lung Deaths: ", round(map_data2()$predicted_black_lung_deaths, 2), "</span>"
+                       "<span class='custom'>Predicted Total Black Lung Deaths: ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
                        )
+  } else if (is.character(map_data2()[[val()]]) | is.factor(map_data2()[[val()]])) {
+    popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>",
+                       "<br>",
+                       "Region: ", map_data2()$region_id,
+                       "<br>",
+                       "MSHA District: ", map_data2()$msha_district_county,
+                       "<br>",
+                       names(variables)[variables==val()], ": ", as.character(map_data2()[[val()]]),
+                       "<br>",
+                       "Total Black Lung Incidences: ", map_data2()$any_cwp,
+                       "<br>",
+                       "<span class='custom'>Predicted Total Black Lung Incidences: ", round(map_data2()$predict_any_cwp, 2), "</span>",
+                       "<br>",
+                       "Total Black Lung Deaths: ", map_data2()$total_black_lung_deaths,
+                       "<br>",
+                       "<span class='custom'>Predicted Total Black Lung Deaths: ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
+    )
   } else {
     popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>",
                        "<br>",
@@ -64,11 +92,11 @@ output$map <- renderLeaflet({
                        "<br>",
                        "Total Black Lung Incidences: ", map_data2()$any_cwp,
                        "<br>",
-                       "<span class='custom'>Predicted Total Black Lung Incidences: ", round(map_data2()$predicted_black_lung_cases, 2),"</span>",
+                       "<span class='custom'>Predicted Total Black Lung Incidences: ", round(map_data2()$predict_any_cwp, 2),"</span>",
                        "<br>",
                        "Total Black Lung Deaths: ", map_data2()$total_black_lung_deaths,
                        "<br>",
-                       "<span class='custom'>Predicted Total Black Lung Deaths: ", round(map_data2()$predicted_black_lung_deaths, 2), "</span>"
+                       "<span class='custom'>Predicted Total Black Lung Deaths: ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
     )
   }
 
@@ -146,22 +174,40 @@ output$map <- renderLeaflet({
 
 observeEvent(input$search_map, {
   output$region_data <- renderDataTable({
-    df <- map_data %>%
-      st_drop_geometry() %>%
-      mutate(intermed = round(get(val()), 2)) %>%
-      select(countyname, state, region_id, msha_district_county, intermed, any_cwp, total_black_lung_deaths) %>%
-      arrange(desc(intermed)) %>%
-      rename(County = countyname,
-             State = state,
-             Region = region_id,
-             `MSHA District` = msha_district_county,
-             `Number of Black Lung Cases` = any_cwp,
-             `Number of Black Lung Deaths` = total_black_lung_deaths
-      )
-
-    colnames(df)[5] <- names(variables)[variables==val()]
-    df
-
+    if (is.numeric(map_data2()[[val()]])) {
+      df <- map_data %>%
+        st_drop_geometry() %>%
+        mutate(intermed = round(get(val()), 2)) %>%
+        select(countyname, state, region_id, msha_district_county, intermed, any_cwp, total_black_lung_deaths) %>%
+        arrange(desc(intermed)) %>%
+        rename(County = countyname,
+               State = state,
+               Region = region_id,
+               `MSHA District` = msha_district_county,
+               `Number of Black Lung Cases` = any_cwp,
+               `Number of Black Lung Deaths` = total_black_lung_deaths
+        )
+      
+      colnames(df)[5] <- names(variables)[variables==val()]
+      df
+    } else {
+      df <- map_data %>%
+        st_drop_geometry() %>%
+        mutate(intermed = get(val())) %>%
+        select(countyname, state, region_id, msha_district_county, intermed, any_cwp, total_black_lung_deaths) %>%
+        arrange(desc(intermed)) %>%
+        rename(County = countyname,
+               State = state,
+               Region = region_id,
+               `MSHA District` = msha_district_county,
+               `Number of Black Lung Cases` = any_cwp,
+               `Number of Black Lung Deaths` = total_black_lung_deaths
+        )
+      
+      colnames(df)[5] <- names(variables)[variables==val()]
+      df
+    }
+    
   }, escape = F, options = list(lengthMenu = c(10, 25, 50), pageLength = 10))
 
 })
