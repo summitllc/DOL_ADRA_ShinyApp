@@ -21,7 +21,7 @@ output$total_prod_time <- renderBillboarder({#renderPlot({
 })
 
 time_data <- data %>%
-  pivot_longer(cols = colnames(data)[str_detect(colnames(data), "01|21")],
+  pivot_longer(cols = colnames(data)[str_detect(colnames(data), "83|20")],
                names_to = c('.value', 'year'),
                names_pattern = '(.*)(..$)')
 
@@ -37,7 +37,7 @@ time_data2 <- data %>%
 
 time_data_outlier_less<- time_data %>%
   filter(totalmines < 100, totalprodx1000st < 100000) %>%
-  mutate(year = paste0(20, year))
+  mutate(year = ifelse(year < 23, paste0(20, year), paste0(19, year)))
 
 p1 <- billboarder() %>%
   bb_scatterplot(data = time_data_outlier_less, x = "totalmines", y = "totalprodx1000st", group = "year") %>%
