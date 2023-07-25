@@ -1,53 +1,53 @@
-output$home1 <- renderValueBox({
+output$home4 <- renderValueBox({
   valueBox(
     formatC('30+', format="d", big.mark=','),
-    paste(("Possible Mapping Metrics")),
+    HTML(paste('Possible Mapping Metrics', br(), ' ')),
     icon = icon("map-marked-alt"),
     color = "black",
     width = 8)
 })
 
-output$home2 <- renderValueBox({
+output$home5 <- renderValueBox({
   valueBox(
     # formatC(nrow(data), format="d", big.mark=','),
     formatC(paste0(data %>% filter(any_cwp != 0) %>% count(), "/3145"), format="d", big.mark=','),
     # paste(("Counties Represented")),
-    paste(("Counties with Black Lung Cases (1970-2014)")),
+    HTML(paste('Counties with Black Lung Cases ', '(1970-2014)')),
     icon = icon('map-pin'),
     color = "black",
     width = 4)
 })
 
-output$home3 <- renderValueBox({
+output$home6 <- renderValueBox({
   valueBox(
     formatC(data %>% filter(any_cwp != 0) %>% group_by(state) %>% count() %>% ungroup() %>% count() %>% ungroup(), format="d", big.mark=','),
-    paste(("States with Black Lung Cases (1970-2014)")),
+    HTML(paste("States with Black Lung Cases (1970-2014)", br(), " ")),
     icon = icon("flag-usa"),
     color = "black")
 })
 
-output$home4 <- renderValueBox({
+output$home1 <- renderValueBox({
   valueBox(
     formatC(sum(data$any_cwp), format="d", big.mark=','),
-    paste(("Total Black Lung Cases (1970-2014)")),
+    paste(("Cummulative Black Lung Cases (1970-2014)")),
     icon = icon("lungs-virus"),
     color = "yellow")
 })
 
-output$home5 <- renderValueBox({
+output$home2 <- renderValueBox({
   valueBox(
     formatC(sum(data$total_black_lung_deaths), format="d", big.mark=','),
-    paste(('Total Black Lung Deaths (1999-2020)')),
+    paste(('Cummulative Black Lung Deaths (1999-2020)')),
     icon = icon('lungs'),
     color = "yellow",
     width = 12)
 })
 
-output$home6 <- renderValueBox({
+output$home3 <- renderValueBox({
   valueBox(
     # Change
     formatC("-75.7% (-1576)", format="s", big.mark=','),
-    paste(("Change in Mines (2001 - 2021)")),
+    paste(("Change in coal-producing mines from 2001 to 2021")),
     icon = icon('hard-hat'),
     color = "yellow")
 })
