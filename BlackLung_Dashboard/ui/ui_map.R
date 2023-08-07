@@ -1,6 +1,6 @@
 tab_map <- tabItem(tabName = "map",
 
-                   titlePanel(p(style="text-align: center;", ("Explore the data with our interactive map!"))),
+                   titlePanel(p(style="text-align: center;", ("Explore the data with our interactive map"))),
 
                    hr(),
 
@@ -8,7 +8,7 @@ tab_map <- tabItem(tabName = "map",
 
                    br(),
 
-                   box(title = strong(("Search Factors related to Black Lung")), status = "success", width = 12,
+                   box(title = strong(("Search factors related to black lung")), status = "success", width = 12,
 
 
                        fluidRow(
@@ -16,10 +16,12 @@ tab_map <- tabItem(tabName = "map",
                          column(4,
                                 selectInput(
                                   inputId = "factor",
-                                  label = strong(("Choose a Factor and click Explore!")),
+                                  label = strong(("Choose a Factor")),
                                   choices = variables
                                   # choices = colnames(map_data)[map_data %>% colnames() %>% str_detect("per1000|pct|percent|tot")]
-                                )),
+                                )
+                                ),
+                         
 
                          # column(4,
                          #        selectInput(
@@ -28,15 +30,31 @@ tab_map <- tabItem(tabName = "map",
                          #          choices = metrics
                          #          # choices = colnames(map_data)[map_data %>% colnames() %>% str_detect("per1000|pct|percent|tot")]
                          #        )),
+                         
+                         column(3,
+                                # div(
+                                #   addHelpButton(
+                                #     "help", ""
+                                #   )),
+                                
+                                uiOutput("radio_opts")
+                                
+                                ),
+
 
                          column(2,
                                 p(" ", style = "margin-bottom: 25px;"),
                                 actionButton(inputId = "search_map",
-                                             label = strong(("Explore!")))
-                         )
+                                             label = strong(("Explore")))
+                         ),
+                         column(2),
+                         
+                         column(1)
                        )
 
                    ),
+                   
+                   # textOutput("map_title"),
 
                    fluidRow(
                      column(12,
