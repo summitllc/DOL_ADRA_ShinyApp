@@ -2,27 +2,25 @@ library(tidyverse)
 library(leaflet)
 library(rgeos)
 library(sf)
+library(DT)
 # tidy census
 
 # data <- readxl::read_xlsx("black lung dataset for map.xlsx")
-data <- readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet = 3)
+data <- readxl::read_xlsx("updated_data.xlsx")
 # map_data <- read_rds("BlackLung_Dashboard/counties_lite.rds")
 map_data <- read_rds("counties_lite.rds") 
 
 map_data <- map_data %>% 
-  mutate(binary_coal_county = ifelse(binary_coal_county == 1, "Yes", "No"),
-         binary_coal_county = factor(binary_coal_county, levels = c("Yes", "No")),
-         scalar_coal_county = factor(scalar_coal_county, levels = c("No Coal", "Very Low", "Low", "Medium", "High", "Very High")),
-         scalar_coal_county = fct_rev(scalar_coal_county),
-         coal_prod_anthracite = ifelse(coal_prod_anthracite == 1, "Yes", "No"),
-         coal_prod_anthracite = factor(coal_prod_anthracite, levels = c("Yes", "No")),
-         coal_prod_bituminous = ifelse(coal_prod_bituminous == 1, "Yes", "No"),
-         coal_prod_bituminous = factor(coal_prod_bituminous, levels = c("Yes", "No")),
-         coal_prod_lignite = ifelse(coal_prod_lignite == 1, "Yes", "No"),
-         coal_prod_lignite = factor(coal_prod_lignite, levels = c("Yes", "No"))
-         ) 
+  # IDEA: Do this during preprocessing if possible. This is geo object
+  mutate(across(starts_with("binary_"), ~ ifelse(. == 1, "Yes", "No"))) %>% 
+  mutate(across(starts_with("binary_"), ~ factor(., levels = c("Yes", "No")))) %>% 
+  mutate(across(starts_with("scalar_"), ~ factor(scalar_coal_county, levels = c("No Coal", "Very Low", "Low", "Medium", "High", "Very High")))) %>%
+  mutate(across(starts_with("coal_prod_"), ~ ifelse(. == 1, "Yes", "No"))) %>% 
+  mutate(across(starts_with("coal_prod_"), ~ factor(., levels = c("Yes", "No"))))
   
 data_dict <- readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet = 4)
+
+crosswalk <- readxl::read_xlsx("blacklung_crosswalk-updated.xlsx")
 
 # factors <- c('countyfips', 
 #              'countyname', 
@@ -63,14 +61,19 @@ data_dict <- readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet
 #                         str_replace("Occ", "OCC"))
 
 
-factor_names = readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet = 1) %>% 
-  colnames()
+# factor_names = readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet = 1) %>% 
+#   colnames()
+# 
+# variables <- data_dict[match(factor_names, data_dict$`Map Variable Name`),] %>% 
+#   pull(Variable)
+# 
+# variables <- setNames(variables, 
+#                       factor_names)
+variables <- crosswalk %>% count(factor) %>% pull(factor)
 
-variables <- data_dict[match(factor_names, data_dict$`Map Variable Name`),] %>% 
-  pull(Variable)
-
-variables <- setNames(variables, 
-                      factor_names)
+dictionary_list <- crosswalk %>% 
+  arrange(factor) %>% 
+  pull(variable)
 
 # metrics <- variables[str_detect(variables, "death|cwp|black")]
 # factors <- variables[!(variables %in% metrics)]
@@ -79,7 +82,7 @@ variables <- setNames(variables,
 #   mutate(long = unlist(map(map_data$centers,1)),
 #          lat = unlist(map(map_data$centers,2)))
 
-percent_cols <- colnames(map_data)[map_data %>% colnames() %>% str_detect("pct|percent")]
+percent_cols <- colnames(data)[data %>% colnames() %>% str_detect("pct|percent|prop")]
 
 
 # Navajo Nation Boundary
@@ -89,3 +92,14 @@ navajo <- read_rds("navajo.rds")
 # Appalacia
 # appalachia <- sf::read_sf('BlackLung_Dashboard/appalachia_bounds/appalachia_bounds.shp') %>% select(geometry)
 appalachia <- sf::read_sf('appalachia_bounds/appalachia_bounds.shp') %>% select(geometry)
+
+# Help Code (from CAT)
+addHelpButton <- function(elementId, x) {
+  div(
+    # div(
+      class = "pull-right",
+      actionLink(elementId, label = NULL, icon = icon("info-circle")),
+    # ),
+    x
+  )
+}
