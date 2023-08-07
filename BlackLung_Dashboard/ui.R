@@ -42,10 +42,12 @@ shinyUI(fluidPage(
                       "<br>"
                     )),
                     
-                    menuItem(("Home"), tabName = "home", icon = icon("home")),
-                    menuItem("Interactive Map", tabName = "map", icon = icon("globe-americas")),
-                    menuItem("Additional Graphs", tabName = "time_series", icon = icon("clock")),
-                    menuItem("Data Dictionary", tabName = "data_dict", icon = icon("book")),
+                    menuItem(HTML("&nbsp;Home"), tabName = "home", icon = icon("home")),
+                    menuItem(HTML("&nbsp;Interactive Map"), tabName = "map", icon = icon("globe-americas")),
+                    menuItem(HTML("&nbsp;Additional Graphs"), tabName = "time_series", icon = icon("clock")),
+                    menuItem(HTML("&nbsp;Data Dictionary"), tabName = "data_dict", icon = icon("book")),
+                    
+                    
                     
                     
                     tags$style("
@@ -59,6 +61,16 @@ shinyUI(fluidPage(
                                 transform: translateX(-50%);
                               }"
                     ),
+                    
+                    tags$style(HTML(
+                      ".sidebar-open .main-footer {
+                                      background-color: green;
+                                      color: white;
+                                    }
+                                    .sidebar-open .main-footer a {
+                                      color: white;
+                                    }"
+                    )),
                     
                     tags$style("
                                .main-sidebar {
@@ -86,12 +98,15 @@ shinyUI(fluidPage(
                 ),
                 
                 dashboardBody(
-                  tags$style(".small-box.bg-black { background-color: #fa234b !important; }"),
-                  tags$style(".small-box.bg-navy { background-color: #013783 !important; }"),
+                  tags$style(".small-box.bg-black { background-color: #013783 !important; }"),
+                  tags$style(".small-box.bg-navy { background-color: #fa234b !important; }"),
                   tags$style(".small-box.bg-yellow { background-color: #fda85e !important; }"),
-                  tags$style(".small-box .icon-large { color: white !important; bottom: 2.5px}"),
-                  tags$style(".small-box p { font-size: .8vw; }"),
+                  tags$style(".small-box .icon-large { color: white !important; font-size: 55px; bottom: 15px; right: 6px;}"),
+                  tags$style(".small-box p { font-size: .95vw; }"),
                   tags$style(".small-box h3 { font-size: 2.5vw; }"),
+                  tags$style(".shiny-text-output { font-size: 28px; }"),
+                  # tags$style(".map-title {font-size: 25px;}"),
+                  tags$style(".left-side, .main-sidebar { width: 250px;}"),
                   tags$style("@import url(https://use.fontawesome.com/releases/v5.7.2/css/all.css);"),
                   tabItems(tab_home, tab_map, tab_time_series, tab_data_dict)
                 )
