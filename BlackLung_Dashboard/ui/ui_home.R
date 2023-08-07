@@ -1,8 +1,6 @@
 tab_home <- tabItem(tabName = "home",
         
-        titlePanel(p(style = "text-align: center;", ("Welcome to the Black Lung Dashboard!"))),
-        
-        hr(),
+        titlePanel(p(style = "text-align: center;", ("Welcome to the Black Lung Dashboard"))),
         
         h4(p(style = "text-align: center;", ("This app is designed for you to interactively visualize black lung metrics throughout the United States."))),
         

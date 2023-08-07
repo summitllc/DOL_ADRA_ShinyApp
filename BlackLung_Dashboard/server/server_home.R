@@ -47,7 +47,7 @@ output$home3 <- renderValueBox({
   valueBox(
     # Change
     formatC("-75.7% (-1576)", format="s", big.mark=','),
-    paste(("Change in coal-producing mines from 2001 to 2021")),
+    paste(("Change in coal mines from 2001 to 2021")),
     icon = icon('hard-hat'),
     color = "yellow")
 })
@@ -71,9 +71,9 @@ output$home8 <- renderValueBox({
 
 output$home9 <- renderValueBox({
   valueBox(
-    formatC(('Contact Us'), format="d", big.mark=','),
-    paste(('For More Information')),
-    icon = icon('address-book'),
+    formatC(('Link to Report'), format="d", big.mark=','),
+    paste(('Coming soon...')),
+    icon = icon('file-circle-check'),
     color = "navy",
     href='https://www.dol.gov/agencies/oasp/evaluation/about#:~:text=For%20questions%20about%20CEO%2C%20please,at%20ChiefEvaluationOffice%40dol.gov.')
 })
