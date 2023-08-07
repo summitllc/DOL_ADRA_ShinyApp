@@ -1,8 +1,13 @@
 output$data_dict_table <- renderDataTable(
-  data_dict %>% 
-    slice(match(variables, Variable)) %>% 
-    bind_rows(data_dict %>% 
-                filter(!(Variable %in% variables))) 
+  
+  data_dict %>%
+    slice(match(dictionary_list, Variable)) %>% 
+    select(-c(Variable, `Map Variable Name`, Format))
+  
+  # data_dict %>% 
+  #   slice(match(variables, Variable)) %>% 
+  #   bind_rows(data_dict %>% 
+  #               filter(!(Variable %in% variables))) 
     # mutate(Name = str_replace_all(Name, "_", " "),
     #        Name = str_replace(Name, "pct", "Percent"),
     #        Name = str_replace(Name, "acshouseheatingfueltotalocc", "acs house heating fuel total occ"),

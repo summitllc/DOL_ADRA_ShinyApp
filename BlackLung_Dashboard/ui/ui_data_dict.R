@@ -1,6 +1,6 @@
 tab_data_dict <- tabItem(tabName = "data_dict",
                          
-                         titlePanel(p(style="text-align: center;", ("Welcome to our data dictionary!"))),
+                         titlePanel(p(style="text-align: center;", ("Welcome to our data dictionary"))),
                          
                          hr(),
                          
