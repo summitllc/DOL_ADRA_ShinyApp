@@ -29,6 +29,13 @@ data <- data %>%
   mutate(across(is.numeric, ~replace_na(., 0))) %>% 
   mutate(across(is.character, ~replace_na(., "N/A")))
 
+# Make new columns - from crosswalk
+data <- data %>% 
+  mutate(across(.cols = matches("total_j\\d*_deaths"), ~ ./acspopulation2021*1000, .names = "{.col}_per1000")) %>% 
+  mutate(coal_prod_any = ifelse(rowSums(across(c(coal_prod_anthracite, coal_prod_bituminous, coal_prod_lignite))) > 0, 1, 0)) 
+
+writexl::write_xlsx(data, 'BlackLung_Dashboard/updated_data.xlsx')
+
 map_data <- data %>% 
   mutate(countyfips = case_when(
     countyfips == 12025 ~ 12086,
