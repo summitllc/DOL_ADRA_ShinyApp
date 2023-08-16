@@ -20,7 +20,7 @@ map_data <- map_data %>%
   
 data_dict <- readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet = 4)
 
-crosswalk <- readxl::read_xlsx("blacklung_crosswalk-updated.xlsx")
+crosswalk <- readxl::read_xlsx("blacklung_crosswalk-updated2.xlsx")
 
 # factors <- c('countyfips', 
 #              'countyname', 

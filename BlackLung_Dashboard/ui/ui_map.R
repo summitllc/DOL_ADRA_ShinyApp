@@ -40,16 +40,24 @@ tab_map <- tabItem(tabName = "map",
                                 uiOutput("radio_opts")
                                 
                                 ),
+                         
+                         column(3,
+                                # div(
+                                #   addHelpButton(
+                                #     "help", ""
+                                #   )),
+                                
+                                uiOutput("radio_opts2")
+                                
+                         ),
+                         
 
 
                          column(2,
                                 p(" ", style = "margin-bottom: 25px;"),
                                 actionButton(inputId = "search_map",
                                              label = strong(("Explore")))
-                         ),
-                         column(2),
-                         
-                         column(1)
+                         )
                        )
 
                    ),

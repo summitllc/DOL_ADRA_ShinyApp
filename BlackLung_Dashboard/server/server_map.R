@@ -12,14 +12,23 @@ val2 <- eventReactive(input$search_map, {
 output$radio_opts <- renderUI({
   radioButtons(
     inputId = "option",
-    label = HTML(paste0(strong(("More Specific Please")), "&nbsp;&nbsp;", addHelpButton("help", ""))), # try to put info circle here
-    choiceNames = crosswalk %>% filter(factor == input$factor) %>% pull(radio),
-    choiceValues = crosswalk %>% filter(factor == input$factor) %>% pull(variable)
+    label = HTML(paste0(strong(("More Specific Please")))), 
+    choices = crosswalk %>% filter(factor == input$factor) %>% count(radio) %>% pull(radio),
+    # choiceValues = crosswalk %>% filter(factor == input$factor) %>% pull(variable)
+  )
+})
+
+output$radio_opts2 <- renderUI({
+  radioButtons(
+    inputId = "option2",
+    label = HTML(paste0(strong(("Even More...")), "&nbsp;&nbsp;", addHelpButton("help", ""))), 
+    choiceNames = crosswalk %>% filter(factor == input$factor) %>% filter(radio == input$option) %>% pull(radio2),
+    choiceValues = crosswalk %>% filter(factor == input$factor) %>% filter(radio == input$option) %>% pull(variable)
   )
 })
 
 val <- eventReactive(input$search_map, {
-  val <- input$option
+  val <- input$option2
 })
 # met <- eventReactive(input$search_map, {
 #   met <- input$metric
@@ -31,8 +40,11 @@ map_data2 <- eventReactive(input$search_map, {
   if (is.numeric(map_data[[val()]])) {
     map_data <- map_data %>% 
       filter(get(val()) > 0)
-  } 
-  print(val())
+  } else {
+    map_data <- map_data %>% 
+      filter(get(val()) != "No Coal" & get(val()) != "No")
+  }
+
   map_data
   
     # mutate_at(vars(val()), ~ifelse(.x == 0, NA, .x))
@@ -234,12 +246,12 @@ observeEvent(input$search_map, {
 })
 
 observeEvent(input$help, {
-  if (str_detect(input$option, "^predict")) {
+  if (str_detect(input$option2, "^predict")) {
     showModal(
       modalDialog(
         p("Choose a factor and a more specific option, and then click explore!"),
         strong("Your Current Option:"),
-        p(data_dict$Description[data_dict$Variable==input$option]),
+        p(data_dict$Description[data_dict$Variable==input$option2]),
         p("**Note: Predicted values (in red) estimate black lung prevalence based on a statistical model that includes independent factors presenting risk to contracting coal-related respiratory illnesses. For additional details, see the report."),
         easyClose = TRUE
       )
@@ -249,7 +261,7 @@ observeEvent(input$help, {
       modalDialog(
         p("Choose a factor and a more specific option, and then click explore!"),
         strong("Your Current Option:"),
-        p(data_dict$Description[data_dict$Variable==input$option]),
+        p(data_dict$Description[data_dict$Variable==input$option2]),
         easyClose = TRUE
       )
     )
