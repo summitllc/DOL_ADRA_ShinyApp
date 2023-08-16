@@ -108,9 +108,9 @@ p1 <- data %>%
         legend.text = element_text(size = 16),
         axis.text = element_text(size = 14),
         axis.title = element_text(size = 16)) +
-  labs(y = "Rate of Coal Miner's Pneumoconiosis",
+  labs(y = "Percent of Coal Miner's Pneumoconiosis",
        x = "MSHA District",
-       title = 'The highest rate of black lung cases and deaths occured in MSHA district C12',
+       title = 'MSHA district C12 had the highest prevalence of both black lung cases and deaths',
        fill = NULL) +
   scale_y_continuous(labels = scales::percent, limits =c(0,.008), expand = c(0,0)) +
   scale_fill_manual(values = c('#fda85e', '#fa234b'))
@@ -205,11 +205,11 @@ p4 <- data %>%
         plot.subtitle = element_text(size = 14),
         legend.text = element_text(size = 16),
         axis.text = element_text(size = 14),
-        axis.title = element_text(size = 14)) +
-  labs(y = "Change in Mining Productivity Ratio (1983 -2020)(%)",
+        axis.title = element_text(size = 16)) +
+  labs(y = "Percent Change in Mining Productivity Ratio",
        x = "MSHA District",
        title = 'On average, coal production per mine has increased from 1983 to 2020 in MSHA districts',
-       subtitle = 'Mining Productivity Ratio: Total Coal Production (in short mines)/ Number of Coal Mines',
+       subtitle = 'Mining Productivity Ratio: Total Coal Production (in thousands of short tons) / Number of Coal Mines',
        fill = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(-.5, 3), n.breaks = 8, expand = c(0,0)) +
   scale_fill_manual(values = c('#013783', "#c3c6c9"))
