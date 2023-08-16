@@ -205,7 +205,7 @@ p4 <- data %>%
         plot.subtitle = element_text(size = 14),
         legend.text = element_text(size = 16),
         axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16)) +
+        axis.title = element_text(size = 14)) +
   labs(y = "Change in Mining Productivity Ratio (1983 -2020)(%)",
        x = "MSHA District",
        title = 'On average, coal production per mine has increased from 1983 to 2020 in MSHA districts',

@@ -12,7 +12,7 @@ output$home5 <- renderValueBox({
     # formatC(nrow(data), format="d", big.mark=','),
     formatC(paste0(data %>% filter(any_cwp != 0) %>% count(), "/3145"), format="d", big.mark=','),
     # paste(("Counties Represented")),
-    HTML(paste('Counties with Black Lung Cases ', '(1970-2014)')),
+    HTML(paste0("Counties with Black Lung Cases","<br>","from 1970 to 2014")),
     icon = icon('map-pin'),
     color = "black",
     width = 4)
@@ -21,7 +21,7 @@ output$home5 <- renderValueBox({
 output$home6 <- renderValueBox({
   valueBox(
     formatC(data %>% filter(any_cwp != 0) %>% group_by(state) %>% count() %>% ungroup() %>% count() %>% ungroup(), format="d", big.mark=','),
-    HTML(paste("States with Black Lung Cases (1970-2014)", br(), " ")),
+    HTML(paste0("States with Black Lung Cases","<br>"," from 1970 to 2014")),
     icon = icon("flag-usa"),
     color = "black")
 })
@@ -29,7 +29,7 @@ output$home6 <- renderValueBox({
 output$home1 <- renderValueBox({
   valueBox(
     formatC(sum(data$any_cwp), format="d", big.mark=','),
-    paste(("Cummulative Black Lung Cases (1970-2014)")),
+    HTML(paste0("Cummulative Black Lung Cases","<br>"," from 1970 to 2014")),
     icon = icon("lungs-virus"),
     color = "yellow")
 })
@@ -37,7 +37,7 @@ output$home1 <- renderValueBox({
 output$home2 <- renderValueBox({
   valueBox(
     formatC(sum(data$total_black_lung_deaths), format="d", big.mark=','),
-    paste(('Cummulative Black Lung Deaths (1999-2020)')),
+    HTML(paste0("Cummulative Black Lung Deaths", "<br>", "from 1999 to 2020")),
     icon = icon('lungs'),
     color = "yellow",
     width = 12)
@@ -46,8 +46,8 @@ output$home2 <- renderValueBox({
 output$home3 <- renderValueBox({
   valueBox(
     # Change
-    formatC("-75.7% (-1576)", format="s", big.mark=','),
-    paste(("Change in coal mines from 2001 to 2021")),
+    formatC("-1576 (-75.7%)", format="s", big.mark=','),
+    HTML(paste0("Change in number of coal-producing","<br>","mines from 2001 to 2021")),
     icon = icon('hard-hat'),
     color = "yellow")
 })

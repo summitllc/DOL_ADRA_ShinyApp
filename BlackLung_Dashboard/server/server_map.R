@@ -28,7 +28,13 @@ val <- eventReactive(input$search_map, {
 map_data2 <- eventReactive(input$search_map, {
   # map_data %>%
   #   filter(get(val()) > 0 & get(met()) > 0)
-  map_data 
+  if (is.numeric(map_data[[val()]])) {
+    map_data <- map_data %>% 
+      filter(get(val()) > 0)
+  } 
+  print(val())
+  map_data
+  
     # mutate_at(vars(val()), ~ifelse(.x == 0, NA, .x))
 })
 
@@ -169,7 +175,7 @@ output$map <- renderLeaflet({
       options = layersControlOptions(collapsed = FALSE)
     ) %>% 
     # add title
-    addControl(html =  paste0("United States Map of ", val2(), " - ", crosswalk$radio[crosswalk$variable==val()]), 
+    addControl(html =  strong(paste0("United States Map of ", val2(), " - ", crosswalk$radio[crosswalk$variable==val()])), 
                position = "topleft", 
                className="info legend") %>%
     # Legend for map
