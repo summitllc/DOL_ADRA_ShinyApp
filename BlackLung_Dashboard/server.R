@@ -17,5 +17,7 @@ shinyServer(function(input, output) {
     source("server/server_map.R", local = TRUE)
     source("server/server_time_series.R", local = TRUE)
     source("server/server_data_dict.R", local = TRUE)
+    source("server/server_data_disclosures.R", local = TRUE)
+  
 
 })
