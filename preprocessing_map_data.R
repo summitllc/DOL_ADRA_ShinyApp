@@ -6,7 +6,7 @@ library(sf)
 library(rmapshaper)
 
 # data <- readxl::read_xlsx("BlackLung_Dashboard/black lung dataset for map.xlsx")
-data <- readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet = 3)
+data <- readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet = 1)
 
 counties <- counties(year = 2020)
 
