@@ -13,17 +13,20 @@ output$radio_opts <- renderUI({
   radioButtons(
     inputId = "option",
     label = HTML(paste0(strong(("More Specific Please")))), 
-    choices = crosswalk %>% filter(factor == input$factor) %>% count(radio) %>% pull(radio),
+    choices = crosswalk %>% filter(factor == input$factor) %>% count(radio) %>% pull(radio)
     # choiceValues = crosswalk %>% filter(factor == input$factor) %>% pull(variable)
   )
 })
 
 output$radio_opts2 <- renderUI({
+  print(input$option)
+  opt = ifelse(is.null(input$option), "Indicator", input$option)
+  print(opt)
   radioButtons(
     inputId = "option2",
     label = HTML(paste0(strong(("Even More...")), "&nbsp;&nbsp;", addHelpButton("help", ""))), 
-    choiceNames = crosswalk %>% filter(factor == input$factor) %>% filter(radio == input$option) %>% pull(radio2),
-    choiceValues = crosswalk %>% filter(factor == input$factor) %>% filter(radio == input$option) %>% pull(variable)
+    choiceNames = crosswalk %>% filter(factor == input$factor) %>% filter(radio == opt) %>% pull(radio2),
+    choiceValues = crosswalk %>% filter(factor == input$factor) %>% filter(radio == opt) %>% pull(variable)
   )
 })
 
@@ -169,9 +172,9 @@ output$map <- renderLeaflet({
                 popup = ~popup_sb, 
                 group = "County-level Data") %>%
     # overlay groups
-    addPolygons(data = navajo, color = "#FF0000", weight = 1, smoothFactor = 0.5,
+    addPolygons(data = navajo, color = "#0189DC", weight = 2, smoothFactor = 0.5,
                 opacity = 1.0, fill = FALSE, group = "Navajo Nation") %>%
-    addPolygons(data = appalachia, color = "#FF0000", weight = 1, smoothFactor = 0.5,
+    addPolygons(data = appalachia, color = "#0189DC", weight = 2, smoothFactor = 0.5,
                 opacity = 1.0, fill = FALSE, group = "Appalachia") %>%
     # addCircles(lng = map_data3()$long, lat = map_data3()$lat, weight = 1,
     #            radius = map_data3()[[met()]] * 100,
@@ -186,8 +189,14 @@ output$map <- renderLeaflet({
       overlayGroups = c("Navajo Nation", "Appalachia"),
       options = layersControlOptions(collapsed = FALSE)
     ) %>% 
+    htmlwidgets::onRender("
+        function() {
+            $('.leaflet-control-layers-overlays').prepend('<label style=\"text-align:center\">Add or remove regional borders</label>');
+        }
+    ") %>% 
     # add title
-    addControl(html =  strong(paste0("United States Map of ", val2(), " - ", crosswalk$radio[crosswalk$variable==val()])), 
+    addControl(html =  strong(paste0("US Map of ", crosswalk$full_title[crosswalk$variable==val()])),
+                                     #val2(), " - ", crosswalk$radio[crosswalk$variable==val()])), 
                position = "topleft", 
                className="info legend") %>%
     # Legend for map
@@ -249,7 +258,7 @@ observeEvent(input$help, {
   if (str_detect(input$option2, "^predict")) {
     showModal(
       modalDialog(
-        p("Choose a factor and a more specific option, and then click explore!"),
+        p("Choose a factor, more specifics, and then click explore!"),
         strong("Your Current Option:"),
         p(data_dict$Description[data_dict$Variable==input$option2]),
         p("**Note: Predicted values (in red) estimate black lung prevalence based on a statistical model that includes independent factors presenting risk to contracting coal-related respiratory illnesses. For additional details, see the report."),
@@ -259,7 +268,7 @@ observeEvent(input$help, {
   } else {
     showModal(
       modalDialog(
-        p("Choose a factor and a more specific option, and then click explore!"),
+        p("Choose a factor, more specifics, and then click explore!"),
         strong("Your Current Option:"),
         p(data_dict$Description[data_dict$Variable==input$option2]),
         easyClose = TRUE
