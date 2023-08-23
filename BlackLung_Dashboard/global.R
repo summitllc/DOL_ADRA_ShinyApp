@@ -18,9 +18,12 @@ map_data <- map_data %>%
   mutate(across(starts_with("coal_prod_"), ~ ifelse(. == 1, "Yes", "No"))) %>% 
   mutate(across(starts_with("coal_prod_"), ~ factor(., levels = c("Yes", "No"))))
   
-data_dict <- readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet = 4)
+data_dict <- readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet = 2)
 
 crosswalk <- readxl::read_xlsx("blacklung_crosswalk-updated2.xlsx")
+
+# create a named vector for cleaning
+replacements <- setNames(as.character(crosswalk$full_title), crosswalk$variable)
 
 # factors <- c('countyfips', 
 #              'countyname', 
