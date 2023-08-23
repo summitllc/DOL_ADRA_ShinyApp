@@ -2,7 +2,14 @@ output$data_dict_table <- renderDataTable(
   
   data_dict %>%
     slice(match(dictionary_list, Variable)) %>% 
-    select(-c(Variable, `Map Variable Name`, Format))
+    left_join(crosswalk %>%
+                select(variable, full_title),
+              by = c('Variable' = 'variable')) %>% 
+    select(full_title, Description, `Formula (if applicable)`) %>% 
+    rename(Variable = full_title) %>% 
+    mutate(`Formula (if applicable)` = str_replace_all(`Formula (if applicable)`, replacements)) 
+    
+    # select(-c(Variable, `Map Variable Name`, Format, `Label Name`)) %>% view()
   
   # data_dict %>% 
   #   slice(match(variables, Variable)) %>% 
