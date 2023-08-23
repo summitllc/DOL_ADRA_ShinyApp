@@ -4,8 +4,6 @@ tab_time_series <- tabItem(tabName = "time_series",
                            
                            titlePanel(p(style="text-align: center;", ("Explore the MSHA mining Districts"))),
                            
-                           hr(),
-                           
                            # h4(p(style="text-align: center;", ("This tab helps you visualize how mining districts differ."))),
                            # 
                            br(),

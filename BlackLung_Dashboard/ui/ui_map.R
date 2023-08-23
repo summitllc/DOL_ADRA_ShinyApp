@@ -2,8 +2,6 @@ tab_map <- tabItem(tabName = "map",
 
                    titlePanel(p(style="text-align: center;", ("Explore the data with our interactive map"))),
 
-                   hr(),
-
                    h4(p(style="text-align: center;", ("This tab helps you visualize the geographic aspects of the black lung dataset."))),
 
                    br(),
