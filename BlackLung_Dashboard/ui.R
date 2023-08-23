@@ -35,11 +35,10 @@ shinyUI(fluidPage(
                     # style = "position: fixed; overflow: visible;",
                     
                     HTML(paste0(
-                      "<br>",
                       "<img style = 'display: block; margin-left: auto; margin-right: auto;' src='Seal_of_the_United_States_Department_of_Labor.png' width = '186'></a>",
                       "<br>",
                       "<p style = 'text-align: center;'><small>Brought to you by</small></p>",
-                      "<p style = 'text-align: center;'><small>The United States Department of Labor</small></p>",
+                      "<p style = 'text-align: center;'><small>The U.S. Department of Labor</small></p>",
                       "<br>"
                     )),
                     
@@ -106,6 +105,8 @@ shinyUI(fluidPage(
                   tags$style(".small-box .icon-large { color: white !important; }"),#font-size: 55px; bottom: 15px; right: 6px;}"),
                   tags$style(".small-box p { font-size: 1.1vw; position: relative; bottom: 10px;}"),
                   tags$style(".small-box h3 { font-size: 2.3vw; }"),
+                  # tags$style(".small { font-size: 100%; }"),
+                  tags$style(".sidebar-menu { font-size: 18px; }"),
                   tags$style(".shiny-text-output { font-size: 28px; }"),
                   tags$style(".leaflet-control-container { z-index: 5; }"),
                   tags$style(".leaflet-top { z-index: 5; }"),
@@ -113,7 +114,7 @@ shinyUI(fluidPage(
                   tags$style(".leaflet-popup-content { width: 325px; }"),
                   tags$style(".small-box {height: 120px; }"),
                   # tags$style(".map-title {font-size: 25px;}"),
-                  tags$style(".left-side, .main-sidebar { width: 250px;}"),
+                  tags$style(".left-side, .main-sidebar { width: 250px; padding-top: 20px;}"),
                   tags$style("@import url(https://use.fontawesome.com/releases/v5.7.2/css/all.css);"),
                   tabItems(tab_home, tab_map, tab_time_series, tab_data_dict, tab_data_disclosures)
                 )
