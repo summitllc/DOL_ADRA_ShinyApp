@@ -6,8 +6,21 @@ tab_data_disclosures <- tabItem(tabName = "data_disclosures",
                          
                          br(),
                          
-                         downloadButton(outputId = "data_download", label = "Data Download"),
+                         fluidRow(
+                           column(12, align = "right",
+                                  # htmlOutput(outputId = 'text_0'),
+                                  downloadButton(outputId = "data_download", label = "Data Download",
+                                                 style="color: #fff; background-color: #337ab7; border-color: #2e6da4"))
+                         ),
                          
-                         textOutput(outputId = "text")
+                         htmlOutput(outputId = "text_1"),
+                         
+                         br(),
+                         
+                         htmlOutput(outputId = "text_2"),
+                         
+                         br(),
+                         
+                         htmlOutput(outputId = "text_3")
                          
 )
