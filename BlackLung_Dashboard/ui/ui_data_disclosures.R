@@ -15,6 +15,13 @@ tab_data_disclosures <- tabItem(tabName = "data_disclosures",
                          
                          htmlOutput(outputId = "text_1"),
                          
+                         # br(),
+                         
+                         fluidRow(
+                           column(12,
+                                  dataTableOutput(outputId = "sources"))
+                         ),
+                         
                          br(),
                          
                          htmlOutput(outputId = "text_2"),

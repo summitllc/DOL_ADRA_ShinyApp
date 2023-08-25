@@ -24,6 +24,15 @@ output$text_1 <- renderText({
          source.")
 })
 
+
+output$sources <- renderDataTable({
+ datatable(data_sources,
+           caption = HTML(paste0("^Indicates the earliest available data.", "<br>", "*Indicates the most currently available data at the time of collection.")),
+           escape = FALSE,
+           options = list(dom = 't'),
+           selection = 'none')
+})
+
 output$text_2 <- renderText({
   paste0("<b>Data Limitations</b>", "<br>", 
   "<ol>

@@ -22,6 +22,9 @@ data_dict <- readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet
 
 crosswalk <- readxl::read_xlsx("blacklung_crosswalk-updated2.xlsx")
 
+data_sources <- readxl::read_xlsx("data_sources.xlsx") %>% 
+  mutate(Location = paste0("<a href='", Location, "' target='_blank'>", Location, "</a>"))
+
 # create a named vector for cleaning
 replacements <- setNames(as.character(crosswalk$full_title), crosswalk$variable)
 

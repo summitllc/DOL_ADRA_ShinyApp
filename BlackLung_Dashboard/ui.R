@@ -107,6 +107,7 @@ shinyUI(fluidPage(
                   tags$style(".small-box h3 { font-size: 2.3vw; }"),
                   # tags$style(".small { font-size: 100%; }"),
                   tags$style(".sidebar-menu { font-size: 18px; }"),
+                  tags$style(".datatables caption { caption-side: bottom; }"),
                   tags$style(".shiny-text-output { font-size: 28px; }"),
                   tags$style(".leaflet-control-container { z-index: 5; }"),
                   tags$style(".leaflet-top { z-index: 5; }"),
