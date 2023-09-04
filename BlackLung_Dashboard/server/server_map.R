@@ -111,11 +111,11 @@ output$map <- renderLeaflet({
                        "<br>",
                        "Cumulative Black Lung Cases (1970-2014): ", map_data2()$any_cwp,
                        "<br>",
-                       "<span class='custom'>Predicted Cumulative Black Lung Cases (1970-2014): ", round(map_data2()$predict_any_cwp, 2), "</span>",
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Cases (1970-2014): ", round(map_data2()$predict_any_cwp, 2), "</span>",
                        "<br>",
                        "Cumulative Black Lung Deaths (1999-2020): ", map_data2()$total_black_lung_deaths,
                        "<br>",
-                       "<span class='custom'>Predicted Cumulative Black Lung Deaths (1999-2020): ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Deaths (1999-2020): ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
                        )
   } else if (is.character(map_data2()[[val()]]) | is.factor(map_data2()[[val()]])) {
     popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>",
@@ -128,11 +128,11 @@ output$map <- renderLeaflet({
                        "<br>",
                        "Cumulative Black Lung Cases (1970-2014): ", map_data2()$any_cwp,
                        "<br>",
-                       "<span class='custom'>Predicted Cumulative Black Lung Cases (1970-2014): ", round(map_data2()$predict_any_cwp, 2), "</span>",
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Cases (1970-2014): ", round(map_data2()$predict_any_cwp, 2), "</span>",
                        "<br>",
                        "Cumulative Black Lung Deaths (1999-2020): ", map_data2()$total_black_lung_deaths,
                        "<br>",
-                       "<span class='custom'>Predicted Cumulative Black Lung Deaths (1999-2020): ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Deaths (1999-2020): ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
     )
   } else {
     popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>",
@@ -145,11 +145,11 @@ output$map <- renderLeaflet({
                        "<br>",
                        "Cumulative Black Lung Cases (1970-2014): ", map_data2()$any_cwp,
                        "<br>",
-                       "<span class='custom'>Predicted Cumulative Black Lung Cases (1970-2014): ", round(map_data2()$predict_any_cwp, 2),"</span>",
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Cases (1970-2014): ", round(map_data2()$predict_any_cwp, 2),"</span>",
                        "<br>",
                        "Cumulative Black Lung Deaths (1999-2020): ", map_data2()$total_black_lung_deaths,
                        "<br>",
-                       "<span class='custom'>Predicted Cumulative Black Lung Deaths (1999-2020): ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Deaths (1999-2020): ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
     )
   }
   
@@ -261,7 +261,7 @@ observeEvent(input$help, {
         p("Choose a factor, more specifics, and then click explore!"),
         strong("Your Current Option:"),
         p(data_dict$Description[data_dict$Variable==input$option2]),
-        p("**Note: Predicted values (in red) estimate black lung prevalence based on a statistical model that includes independent factors presenting risk to contracting coal-related respiratory illnesses. For additional details, see the report."),
+        p("**Note: Regression-estimated values (in red) estimate black lung prevalence based on a statistical model that includes independent factors presenting risk to contracting coal-related respiratory illnesses. For additional details, see the report."),
         easyClose = TRUE
       )
     )
