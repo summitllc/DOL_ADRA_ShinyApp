@@ -27,7 +27,7 @@ output$text_1 <- renderText({
 
 output$sources <- renderDataTable({
  datatable(data_sources,
-           caption = HTML(paste0("^Indicates the earliest available data.", "<br>", "*Indicates the most currently available data at the time of collection.")),
+           caption = HTML(paste0("*Indicates the earliest available data.", "<br>", "^Indicates the most currently available data at the time of collection.")),
            escape = FALSE,
            options = list(dom = 't'),
            selection = 'none')
