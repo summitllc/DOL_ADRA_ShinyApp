@@ -47,7 +47,7 @@ output$home3 <- renderValueBox({
   valueBox(
     # Change
     formatC("-1576 (-75.7%)", format="s", big.mark=','),
-    HTML(paste0("Change in number of coal-producing","<br>","mines from 2001 to 2021")),
+    HTML(paste0("Change in number of coal-producing","<br>","mines from 1983 to 2020")),
     icon = icon('hard-hat'),
     color = "yellow")
 })
