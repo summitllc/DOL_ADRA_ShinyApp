@@ -1,6 +1,6 @@
 library(billboarder)
 
-tab_time_series <- tabItem(tabName = "time_series",
+tab_bar_graphs <- tabItem(tabName = "bar_graphs",
                            
                            titlePanel(p(style="text-align: center;", ("Explore the MSHA mining Districts"))),
                            

@@ -15,7 +15,7 @@ library(shinycssloaders)
 # Sourced Files 
 source("ui/ui_home.R")
 source("ui/ui_map.R")
-source("ui/ui_time_series.R")
+source("ui/ui_bar_graphs.R")
 source("ui/ui_data_dict.R")
 source("ui/ui_data_disclosures.R")
 
@@ -44,7 +44,7 @@ shinyUI(fluidPage(
                     
                     menuItem(HTML("&nbsp;Home"), tabName = "home", icon = icon("home")),
                     menuItem(HTML("&nbsp;Interactive Map"), tabName = "map", icon = icon("globe-americas")),
-                    menuItem(HTML("&nbsp;Additional Graphs"), tabName = "time_series", icon = icon("clock")),
+                    menuItem(HTML("&nbsp;Additional Graphs"), tabName = "bar_graphs", icon = icon("clock")),
                     menuItem(HTML("&nbsp;Data Dictionary"), tabName = "data_dict", icon = icon("book")),
                     menuItem(HTML("&nbsp;Data Disclosures"), tabName = "data_disclosures", icon = icon("table")),
                     
@@ -117,7 +117,7 @@ shinyUI(fluidPage(
                   # tags$style(".map-title {font-size: 25px;}"),
                   tags$style(".left-side, .main-sidebar { width: 250px; padding-top: 20px;}"),
                   tags$style("@import url(https://use.fontawesome.com/releases/v5.7.2/css/all.css);"),
-                  tabItems(tab_home, tab_map, tab_time_series, tab_data_dict, tab_data_disclosures)
+                  tabItems(tab_home, tab_map, tab_bar_graphs, tab_data_dict, tab_data_disclosures)
                 )
                 
                 
