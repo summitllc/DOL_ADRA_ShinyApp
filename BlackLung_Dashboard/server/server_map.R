@@ -4,7 +4,6 @@ library(tigris)
 library(sf)
 library(rmapshaper)
 
-
 val2 <- eventReactive(input$search_map, {
   val2 <- input$factor
 })
@@ -14,14 +13,11 @@ output$radio_opts <- renderUI({
     inputId = "option",
     label = HTML(paste0(strong(("More Specific Please")))), 
     choices = crosswalk %>% filter(factor == input$factor) %>% count(radio) %>% pull(radio)
-    # choiceValues = crosswalk %>% filter(factor == input$factor) %>% pull(variable)
   )
 })
 
 output$radio_opts2 <- renderUI({
-  print(input$option)
   opt = ifelse(is.null(input$option), "Indicator", input$option)
-  print(opt)
   radioButtons(
     inputId = "option2",
     label = HTML(paste0(strong(("Even More...")), "&nbsp;&nbsp;", addHelpButton("help", ""))), 
@@ -33,13 +29,9 @@ output$radio_opts2 <- renderUI({
 val <- eventReactive(input$search_map, {
   val <- input$option2
 })
-# met <- eventReactive(input$search_map, {
-#   met <- input$metric
-# })
 
 map_data2 <- eventReactive(input$search_map, {
-  # map_data %>%
-  #   filter(get(val()) > 0 & get(met()) > 0)
+  
   if (is.numeric(map_data[[val()]])) {
     map_data <- map_data %>% 
       filter(get(val()) > 0)
@@ -49,39 +41,15 @@ map_data2 <- eventReactive(input$search_map, {
   }
 
   map_data
-  
-    # mutate_at(vars(val()), ~ifelse(.x == 0, NA, .x))
+    
 })
-
-# map_data3 <- eventReactive(input$search_map, {
-#   map_data %>%
-#     filter(get(met()) > 0)
-# })
-
-# tag.map.title <- tags$style(HTML(".leaflet-control.map-title { 
-#                                   left: 50%;
-#                                   text-align: center;
-#                                   padding-left: 10px; 
-#                                   padding-right: 10px; 
-#                                   background: rgba(255,255,255,0.75);
-#                                   font-weight: bold;
-#                                   font-size: 28px;
-#                                 }"))
-
-# output$map_title <- renderText({
-#   paste0("United States Map of ", val2(), " - ", crosswalk$radio[crosswalk$variable==val()])
-# })
-
-# title <- tags$div(
-#   tag.map.title, HTML("Map title")
-# )  
 
 output$map <- renderLeaflet({
   # Creating a color palette based on the number range in the column of interest
   if (all(map_data2()[[val()]] == 0)) {
     pal <- colorNumeric(c("#FFFFFF"), domain = map_data2()[[val()]], na.color = "#bababa")
     
-  } else if (str_detect(val(), "^scalar_")) {#(val() == "scalar_coal_county") {#(is.character(map_data2()[[val()]])) {
+  } else if (str_detect(val(), "^scalar_")) {
     pal <- colorFactor(palette = "YlOrRd", domain = map_data2()[[val()]], 
                        levels = c("No Coal", "Very Low", "Low", "Medium", "High", "Very High"), 
                        ordered = T,
@@ -111,11 +79,13 @@ output$map <- renderLeaflet({
                        "<br>",
                        "Cumulative Black Lung Cases (1970-2014): ", map_data2()$any_cwp,
                        "<br>",
-                       "<span class='custom'>Regression-estimated Cumulative Black Lung Cases (1970-2014): ", round(map_data2()$predict_any_cwp, 2), "</span>",
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Cases (1970-2014): ", 
+                       round(map_data2()$predict_any_cwp, 2), "</span>",
                        "<br>",
                        "Cumulative Black Lung Deaths (1999-2020): ", map_data2()$total_black_lung_deaths,
                        "<br>",
-                       "<span class='custom'>Regression-estimated Cumulative Black Lung Deaths (1999-2020): ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Deaths (1999-2020): ", 
+                       round(map_data2()$predict_black_lung_deaths, 2), "</span>"
                        )
   } else if (is.character(map_data2()[[val()]]) | is.factor(map_data2()[[val()]])) {
     popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>",
@@ -128,11 +98,13 @@ output$map <- renderLeaflet({
                        "<br>",
                        "Cumulative Black Lung Cases (1970-2014): ", map_data2()$any_cwp,
                        "<br>",
-                       "<span class='custom'>Regression-estimated Cumulative Black Lung Cases (1970-2014): ", round(map_data2()$predict_any_cwp, 2), "</span>",
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Cases (1970-2014): ", 
+                       round(map_data2()$predict_any_cwp, 2), "</span>",
                        "<br>",
                        "Cumulative Black Lung Deaths (1999-2020): ", map_data2()$total_black_lung_deaths,
                        "<br>",
-                       "<span class='custom'>Regression-estimated Cumulative Black Lung Deaths (1999-2020): ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Deaths (1999-2020): ", 
+                       round(map_data2()$predict_black_lung_deaths, 2), "</span>"
     )
   } else {
     popup_sb <- paste0("<B><u>", map_data2()$countyname, " County, ", map_data2()$state, "</B></u>",
@@ -145,11 +117,13 @@ output$map <- renderLeaflet({
                        "<br>",
                        "Cumulative Black Lung Cases (1970-2014): ", map_data2()$any_cwp,
                        "<br>",
-                       "<span class='custom'>Regression-estimated Cumulative Black Lung Cases (1970-2014): ", round(map_data2()$predict_any_cwp, 2),"</span>",
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Cases (1970-2014): ", 
+                       round(map_data2()$predict_any_cwp, 2),"</span>",
                        "<br>",
                        "Cumulative Black Lung Deaths (1999-2020): ", map_data2()$total_black_lung_deaths,
                        "<br>",
-                       "<span class='custom'>Regression-estimated Cumulative Black Lung Deaths (1999-2020): ", round(map_data2()$predict_black_lung_deaths, 2), "</span>"
+                       "<span class='custom'>Regression-estimated Cumulative Black Lung Deaths (1999-2020): ", 
+                       round(map_data2()$predict_black_lung_deaths, 2), "</span>"
     )
   }
   
@@ -176,16 +150,7 @@ output$map <- renderLeaflet({
                 opacity = 1.0, fill = FALSE, group = "Navajo Nation") %>%
     addPolygons(data = appalachia, color = "#0189DC", weight = 2, smoothFactor = 0.5,
                 opacity = 1.0, fill = FALSE, group = "Appalachia") %>%
-    # addCircles(lng = map_data3()$long, lat = map_data3()$lat, weight = 1,
-    #            radius = map_data3()[[met()]] * 100,
-    #            color = "purple",
-    #            opacity = .75, 
-    #            fill = FALSE, 
-    #            # data = map_data2,
-    #            group = "Metric") %>% 
-    # Overlay control
     addLayersControl(
-      # baseGroups = c("Tiles"),
       overlayGroups = c("Navajo Nation", "Appalachia"),
       options = layersControlOptions(collapsed = FALSE)
     ) %>% 
@@ -196,7 +161,6 @@ output$map <- renderLeaflet({
     ") %>% 
     # add title
     addControl(html =  strong(paste0("US Map of ", crosswalk$full_title[crosswalk$variable==val()])),
-                                     #val2(), " - ", crosswalk$radio[crosswalk$variable==val()])), 
                position = "topleft", 
                className="info legend") %>%
     # Legend for map
@@ -258,17 +222,19 @@ observeEvent(input$help, {
   if (str_detect(input$option2, "^predict")) {
     showModal(
       modalDialog(
-        p("Choose a factor, more specifics, and then click explore!"),
+        p("Choose a factor, more specifics, and then click explore."),
         strong("Your Current Option:"),
         p(data_dict$Description[data_dict$Variable==input$option2]),
-        p("**Note: Regression-estimated values (in red) estimate black lung prevalence based on a statistical model that includes independent factors presenting risk to contracting coal-related respiratory illnesses. For additional details, see the report."),
+        p("**Note: Regression-estimated values (in red) estimate black lung prevalence 
+          based on a statistical model that includes independent factors presenting 
+          risk to contracting coal-related respiratory illnesses. For additional details, see the report."),
         easyClose = TRUE
       )
     )
   } else {
     showModal(
       modalDialog(
-        p("Choose a factor, more specifics, and then click explore!"),
+        p("Choose a factor, more specifics, and then click explore."),
         strong("Your Current Option:"),
         p(data_dict$Description[data_dict$Variable==input$option2]),
         easyClose = TRUE

@@ -9,9 +9,8 @@ output$home4 <- renderValueBox({
 
 output$home5 <- renderValueBox({
   valueBox(
-    # formatC(nrow(data), format="d", big.mark=','),
-    formatC(paste0(data %>% filter(any_cwp != 0) %>% count(), "/3145"), format="d", big.mark=','),
-    # paste(("Counties Represented")),
+    formatC(paste0(data %>% filter(any_cwp != 0) %>% count(), "/3145"), 
+            format="d", big.mark=','),
     HTML(paste0("Counties with Black Lung Cases","<br>","from 1970 to 2014")),
     icon = icon('map-pin'),
     color = "black",
@@ -20,7 +19,14 @@ output$home5 <- renderValueBox({
 
 output$home6 <- renderValueBox({
   valueBox(
-    formatC(data %>% filter(any_cwp != 0) %>% group_by(state) %>% count() %>% ungroup() %>% count() %>% ungroup(), format="d", big.mark=','),
+    formatC(data %>% 
+              filter(any_cwp != 0) %>% 
+              group_by(state) %>% 
+              count() %>% 
+              ungroup() %>% 
+              count() %>% 
+              ungroup(), 
+            format="d", big.mark=','),
     HTML(paste0("States with Black Lung Cases","<br>"," from 1970 to 2014")),
     icon = icon("flag-usa"),
     color = "black")
@@ -62,7 +68,8 @@ output$home7 <- renderValueBox({
 
 output$home8 <- renderValueBox({
   valueBox(
-    formatC(data %>% count(msha_district_county) %>% count() %>% pull() - 1, format="d", big.mark=','),
+    formatC(data %>% count(msha_district_county) %>% count() %>% pull() - 1, 
+            format="d", big.mark=','),
     paste(('MSHA Districts Represented')),
     icon = icon('hard-hat'),
     color = "navy")
