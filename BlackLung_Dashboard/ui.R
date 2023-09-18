@@ -26,9 +26,11 @@ shinyUI(fluidPage(
                   sidebarMenu(
                    
                     HTML(paste0(
-                      "<img style = 'display: block; margin-left: auto; margin-right: auto;' src='Seal_of_the_United_States_Department_of_Labor.png' width = '186'></a>",
+                      "<p style = 'text-align: center;'><large> Placeholder <br> for image </large></p>",
+                      # Uncomment the next line of code to add an image (make sure the image is in the www folder)
+                      # "<img style = 'display: block; margin-left: auto; margin-right: auto;' src='Seal_of_the_United_States_Department_of_Labor.png' width = '186'></a>",
                       "<br>",
-                      "<p style = 'text-align: center;'><small>Brought to you by <br>The U.S. Department of Labor</small></p>",
+                      "<p style = 'text-align: center;'><small> Placeholder for <br> image caption </small></p>",
                       "<br>"
                     )),
                     
