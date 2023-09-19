@@ -28,6 +28,9 @@ data_dict <- readxl::read_xlsx("black lung analytic dataset FOR MAP.xlsx", sheet
 
 crosswalk <- readxl::read_xlsx("blacklung_crosswalk-updated2.xlsx")
 
+# Uncomment the following code to remove 'Household Residential Coal Use' from the map
+# crosswalk <- crosswalk %>% filter(!str_detect(factor, '.*Residential Coal Use'))
+
 data_sources <- readxl::read_xlsx("data_sources.xlsx") %>% 
   mutate(Location = paste0("<a href='", Location, "' target='_blank'>", Location, "</a>"))
 
