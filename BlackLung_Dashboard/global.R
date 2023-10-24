@@ -1,6 +1,6 @@
 library(tidyverse)
 library(leaflet)
-library(rgeos)
+# library(rgeos)
 library(sf)
 library(DT)
 # library(tidycensus)
